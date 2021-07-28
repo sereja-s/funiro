@@ -1,0 +1,66 @@
+@import "mixins";
+
+@import "fonts";
+
+@import "icons";
+
+// шрифт по умолчанию
+$fontFamily: "Gilroy";
+$fontSize: 16px;
+
+// переменные
+$minWidth: 320px;
+$maxWidth: 1440;
+$maxWidthContainer: 1270;
+$md1: $maxWidthContainer + 12;
+$md2: 991.98;
+$md3: 767.98;
+$md4: 479.98;
+
+$mainColor: #3a3a3a;
+$orangeColor: #e89f71;
+$grayColor: #898989;
+$dackgrayColor: #616161;
+
+// обнуление Общие параметры
+@import "null";
+
+body {
+	color: $mainColor;
+	font-family: $fontFamily;
+	font-size: $fontSize;
+
+	&._lock {
+		overflow: hidden;
+	}
+}
+
+// оболочка
+.wrapper {
+	width: 100%;
+	min-height: 100%;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+	// &._loaded {
+	// }
+}
+
+// основная сетка
+._container {
+	min-width: $maxWidthContainer + px;
+	padding: 0 15px; // поля, что бы содержимое контейнера не прилипало к краям
+	margin: 0 auto;
+
+	// @media (max-width: $md1+px) {
+	// 	max-width: 970px;
+	// }
+	// @media (max-width: $md2+px) {
+	// 	min-width: 750px;
+	// }
+	// @media (max-width: $md3+px) {
+	// 	max-width: none;
+	// 	padding: 0 10px;
+	// }
+}
+@import "header";
