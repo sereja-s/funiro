@@ -1,0 +1,149 @@
+/* .footer {
+} */
+/* .footer__container {
+} */
+/* ._container {
+} */
+.footer__body {
+	border-top: 1px solid #d8d8d8;
+	display: grid;
+	grid-template-columns: 250px 1fr 290px;
+	padding-top: 80px;
+	padding-bottom: 60px;
+	column-gap: 80px; // отступы между объектами
+	// перестроим grid
+	@media (max-width: $md1+px) {
+		grid-template-rows: auto auto;
+		grid-template-columns: 1fr 290px;
+	}
+	@media (max-width: $md2+px) {
+		display: block;
+	}
+}
+.footer__main {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	// перестроим grid
+	@media (max-width: $md1+px) {
+		grid-column: span 2;
+		margin-bottom: 40px;
+	}
+}
+.footer__logo {
+	margin: 0px 0px 16px 0px;
+	color: rgb(70, 119, 5);
+}
+
+.footer__text {
+	color: $grayColor;
+	line-height: 150%;
+	&:not(:last-child) {
+		margin: 0 0 1em 0;
+	}
+}
+/* .footer__contacts {
+} */
+.contacts-footer {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+}
+.contacts-footer__item {
+	display: inline-flex;
+	align-items: center;
+	line-height: 150%;
+	color: $grayColor;
+	transition: color 0.5s ease 0s;
+	&::before {
+		margin: 0 8px 0 0;
+	}
+	&:not(:last-child) {
+		margin-bottom: 16px;
+	}
+	&:hover {
+		color: #f58b28;
+	}
+}
+/* .icon-location {
+} */
+/* .icon-phone {
+} */
+.footer__menu {
+	@media (max-width: $md2+px) {
+		margin-bottom: 40px;
+	}
+}
+
+// общие стили для 3-х колонок среднего блока
+.menu-footer {
+	@media (min-width: $md3+px) {
+		display: flex; // колонки станут в ряд
+	}
+}
+.menu-footer__column {
+	@media (min-width: $md3+px) {
+		flex: 0 1 33.333%; // колонки среднего блока займут третью часть по горизонтали
+	}
+	@media (max-width: $md4+px) {
+		margin-bottom: 30px;
+	}
+}
+.menu-footer__title {
+	margin: 0 0 16px 0;
+}
+.menu-footer__list {
+	li {
+		&:not(:last-child) {
+			margin: 0 0 15px 0;
+		}
+	}
+}
+.menu-footer__link {
+	color: $dackgrayColor;
+	transition: color 0.3s ease 0s;
+	line-height: 120%;
+	font-weight: 500;
+	&:hover {
+		color: #f17908;
+	}
+}
+/* .footer__subscribe {
+	
+} */
+/* .subscribe {
+	
+} */
+.subscribe__title {
+	margin: 0 0 16px 0;
+}
+.subscribe__form {
+	display: flex;
+	position: relative;
+}
+
+// надпись в поле поиска
+.subscribe__input {
+	width: 100%;
+	padding: 0 12px;
+	background: #d4d1ce;
+	color: rgb(46, 45, 45);
+}
+.subscribe__button {
+	flex: 0 0 45px;
+	height: 45px;
+	// отцентруем иконку
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 18px;
+	background-color: $orangeColor;
+	color: rgb(3, 102, 33);
+	transition: background-color 0.5s ease 0s;
+	margin: 0 0 0 4px;
+	&:hover {
+		background-color: #f58b28;
+	}
+}
+/* .icon-send {
+} */

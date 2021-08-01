@@ -26,10 +26,10 @@ $dackgrayColor: #616161;
 @import "null";
 
 body {
+	background: #f9f1e7;
 	color: $mainColor;
 	font-family: $fontFamily;
 	font-size: $fontSize;
-
 	&._lock {
 		overflow: hidden;
 	}
@@ -47,8 +47,8 @@ body {
 }
 
 // основная сетка
-._container {
-	min-width: $maxWidthContainer + px;
+.container {
+	//min-width: $maxWidthContainer + px;
 	padding: 0 15px; // поля, что бы содержимое контейнера не прилипало к краям
 	margin: 0 auto;
 
@@ -63,4 +63,13 @@ body {
 	// 	padding: 0 10px;
 	// }
 }
+
+.footer-title {
+	font-size: 24px;
+	line-height: 29 * 0.04167 * 100%;
+	font-weight: 700;
+	color: #000000;
+}
+
 @import "header";
+@import "footer";
