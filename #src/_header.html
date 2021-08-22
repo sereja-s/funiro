@@ -1,17 +1,28 @@
 <header class="header">
+	<!-- оболочка шапки -->
 	<div class="header__wrapper">
+		<!-- ограниивающий контейнер -->
 		<div class="header__container container">
+			<!-- тело шапки (контейнер с элементами) -->
 			<div class="header__body">
 
+				<!-- 1) главный блок -->
 				<div class="header__main">
+					<!-- 1.1) логотип -->
 					<a href="#" class="header__logo footer-title">Funiro.</a>
-
+					<!-- 1.2) ограничивающий контейнер меню -->
 					<div class="header__menu menu">
+						<!-- тело меню (с элементами) -->
 						<nav class="menu__body">
+							<!-- список элементов меню -->
 							<ul data-spoilers="768,max" class="menu__list">
+								<!-- элемент меню -->
 								<li class="menu__item">
+									<!-- название элемента-ссылки -->
 									<a href="#" class="menu__link">Products</a>
+									<!-- кнопка стрелочка-вниз -->
 									<button data-spoiler type="submit" class="menu__arrow icon-arrow-down"></button>
+									<!-- выпадающий список -->
 									<ul class="menu__sub-list">
 										<li class="menu__sub-item">
 											<a href="#" class="menu__sub-link">Product #1</a>
@@ -27,8 +38,10 @@
 										</li>
 									</ul>
 								</li>
+								<!-- элемент меню -->
 								<li class="menu__item">
-									<a href="" class="menu__link">Rooms</a>
+									<a href="#" class="menu__link">Rooms</a>
+									<!-- кнопка стрелочка-вниз -->
 									<button data-spoiler type="submit" class="menu__arrow icon-arrow-down"></button>
 									<ul class="menu__sub-list">
 										<li class="menu__sub-item">
@@ -46,6 +59,7 @@
 
 									</ul>
 								</li>
+								<!-- элемент меню -->
 								<li class="menu__item">
 									<a href="#" class="menu__link">Inspirations</a>
 								</li>
@@ -54,35 +68,44 @@
 					</div>
 
 				</div>
+
+				<!-- 2) блок поиска -->
 				<div class="header__search">
+					<!-- общий объект(контейнер) формы поиска -->
 					<div class="search-form">
-						<!-- кнопка, которая появится при адаптиве, когда скроем форму -->
+						<!-- кнопка (иконка-поиска), которая появится при адаптиве, когда скроем форму -->
 						<button type="button" class="search-form__icon icon-search"></button>
+						<!-- форма поиска с злементами -->
 						<form action="#" class="search-form__item">
+							<!-- 2.1) кнопка (иконка-поиска)-->
 							<button type="submit" class="search-form__btn icon-search"></button>
-							<!-- поле ввода -->
+							<!-- 2.2) поле для ввода -->
 							<input autocomplete="off" type="text" name="form[]" data - value="Search for minimalist chair"
 								class="search-form__input">
 						</form>
 					</div>
 				</div>
+
+				<!-- 3) блок действий -->
 				<div class="header__actions actions-header">
-					<!-- 1-й элемент вывод иконки-сердечка -->
+					<!-- 3.1) элемент иконка-сердечка(избранное) -->
 					<a href="#" class="actions-header__item actions-header__item--favorites icon-favorite"></a>
-					<!-- 2-й элемент вывод иконки-корзины -->
+					<!-- 3.2) элемент иконка-корзины -->
 					<div class="actions-header__item cart-header">
-						<!-- иконка-корзина -->
-						<a href="#" class="cart-header__icon icon-cart"></a>
+						<!-- ссылка (иконка-корзина) -->
+						<a href="#" class="cart-header__icon icon-cart"><span>1</span></a>
 						<!-- выпадающий список корзины -->
 						<div class="cart-header__body">
 							<ul class="cart-header__list cart-list"></ul>
 						</div>
 					</div>
-					<!-- 3-й элемент аватарка -->
+					<!-- 3.3) элемент картинка-аватарки -->
 					<a href="#" class="actions-header__item actions-header__item--user ibg">
 						<img src="img/avatar.jpg" alt="Avatar">
 					</a>
 				</div>
+
+				<!-- 4) кнопка бургер-меню (появится при адаптииве на малых экранах) -->
 				<button type="button" class="icon-menu">
 					<span></span>
 					<span></span>

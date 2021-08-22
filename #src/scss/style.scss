@@ -11,7 +11,7 @@ $fontSize: 16px;
 // переменные
 $minWidth: 320px;
 $maxWidth: 1440;
-$maxWidthContainer: 1270;
+$maxWidthContainer: 1270; // учли поля (что-бы контент не прилипал к краям экрана)
 $md1: $maxWidthContainer + 12;
 $md2: 991.98;
 $md3: 767.98;
@@ -26,7 +26,6 @@ $dackgrayColor: #616161;
 @import "null";
 
 body {
-	background: #f9f1e7;
 	color: $mainColor;
 	font-family: $fontFamily;
 	font-size: $fontSize;
@@ -71,5 +70,180 @@ body {
 	color: #000000;
 }
 
+// общие стили для кнопок
+.btn {
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	padding: 0 15px;
+	text-align: center;
+	transition: all 0.5s ease 0s;
+	min-height: 48px;
+}
+
+// общие стили стрелочек для слайдера
+.slider-arrows {
+	display: grid;
+	grid-template-columns: repeat(2, 48px); // (кол-во, размер)
+	column-gap: 8px; // расстояние между элементами (колонками)
+}
+.slider-arrow {
+	border-radius: 50%;
+	height: 48px;
+	background-color: rgba(232, 159, 113, 0.3);
+	color: $orangeColor;
+	font-size: 12px;
+	cursor: pointer;
+	&:hover {
+		color: #fff;
+		background-color: rgba(232, 159, 113, 1);
+	}
+}
+.slider-arrow--prev {
+	&::before {
+		transform: rotate(90deg);
+	}
+}
+
+.slider-arrow--next {
+	&::before {
+		transform: rotate(-90deg);
+	}
+}
+
+.slider-arrow--white {
+	box-shadow: 0 4px 14px 1px rgba(0, 0, 0, 0.16);
+	background-color: #fff;
+	&:hover {
+		background-color: $orangeColor;
+		color: #fff;
+	}
+}
+
 @import "header";
 @import "footer";
+
+// общий класс - страница
+.page {
+	flex: 1 1 auto;
+}
+.page__main-slider {
+}
+
+// классы слайдера
+.main-slider {
+	background: #fcf8f3;
+}
+.main-slider__container {
+	position: relative;
+	@media (min-width: $md2+px) {
+		&::before {
+			content: "";
+			background: #f9f1e7;
+			position: absolute;
+			top: 0;
+			// сдвинем элемент
+			width: 100vw;
+			right: 376px;
+
+			height: 100%;
+		}
+	}
+}
+/* .container {
+} */
+.main-slider__body {
+	padding: 140px 0 0 0;
+	position: relative;
+	z-index: 2;
+	@media (max-width: $md2+px) {
+		padding: 80px 0 0 0;
+	}
+	@media (max-width: $md3+px) {
+		padding: 50px 0 0 0;
+	}
+	@media (min-width: $md2+px) {
+		display: flex; // Сделали flex-контейнер ( элементы станут в ряд )
+	}
+}
+.main-slider__content {
+	flex: 0 0 494 /* 1/1240 */ * 0.000806 * 100%;
+}
+
+.content-main {
+	position: relative;
+	z-index: 5;
+	padding: 15px;
+	background: rgba(255, 255, 255, 0.72);
+	@media (min-width: $md2 + px) {
+		padding: 60px;
+		background: rgba(255, 255, 255, 0.9);
+	}
+}
+.content-main__title {
+	font-size: 56px;
+	font-weight: 700;
+	line-height: 120%;
+	&:not(:last-child) {
+		margin: 0 0 16px 0;
+	}
+}
+.content-main__text {
+	font-weight: 500;
+	font-size: 20px;
+	line-height: 150%;
+	color: $grayColor;
+	&:not(:last-child) {
+		margin: 0 0 48px 0;
+	}
+}
+.content-main__button {
+	font-weight: 600;
+	min-height: 78px;
+	font-size: 20px;
+	background-color: $orangeColor;
+	color: #fff;
+	width: 100%;
+	&:hover {
+		background-color: #ffae7b;
+	}
+}
+
+.main-slider__slider {
+	flex: 1 1 auto; // разрешаем слайдеру увеличиваться на всё оставшееся пространство
+	min-width: 0px;
+}
+.slider-main {
+}
+.slider-main__controls {
+}
+.controls-slider-main {
+}
+.controls-slider-main__dotts {
+}
+.controls-slider-main__arrows {
+}
+
+.icon-arrow-down {
+}
+
+.slider-main__body {
+}
+._swiper {
+}
+.slider-main__slide {
+}
+.slider-main__image {
+}
+.ibg {
+}
+.slider-main__content {
+}
+.slider-main__title {
+}
+.slider-main__text {
+}
+.slider-main__price {
+}
+.icon-arrow-link {
+}
