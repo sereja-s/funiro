@@ -69,7 +69,7 @@
 		height: 100%;
 		overflow: auto; // чтобы меню прокручивалось
 		top: 0;
-		left: 0; // скрыли меню
+		left: -100%; // скрыли меню
 		//background-color: #f7dfc3;
 		transition: left 0.5s ease 0s;
 		padding: 70px 15px 30px 15px;
@@ -81,19 +81,19 @@
 			width: 100%;
 			height: 50px;
 			top: 0;
-			left: 0; // скрыли меню
+			left: -100%; // скрыли прокладку меню
 			//background-color: #f7dfc3;
 			transition: left 0.5s ease 0s;
 			z-index: 2;
 		}
 		/* 33 */
 		/* ВЕРНЁМ МЕНЮ */
-		/* &._active {
+		&._active {
 			left: 0;
 			&::before {
 				left: 0;
 			}
-		} */
+		}
 	}
 }
 
@@ -191,12 +191,15 @@
 	margin: 0 0 0 8px;
 	transition: all 0.5s ease 0s; // добавили анимацию(стрелочка переворачивается) при наведении
 	font-size: 10px;
+	background-color: transparent;
+
 	@media (max-width: $md3+px) {
 		font-size: 15px;
 		font-weight: 600;
 		//color: rgb(245, 12, 12);
 		//margin-top: 25px;
 		&._active {
+			// при открытии слайдера, стрелочка перевернётся
 			transform: rotate(-180deg);
 		}
 	}
@@ -245,10 +248,10 @@
 		margin: 0 0 5px 0;
 
 		// увеличили расстояние между пунктами
-		/* @media (max-width: $md3+px) {
+		@media (max-width: $md3+px) {
 			margin: 0 0 10px 0;
 		}
-		@media (max-width: $md4+px) {
+		/* @media (max-width: $md4+px) {
 			margin: 0 0 5px 0;
 		} */
 	}
@@ -260,11 +263,18 @@
 	color: #fff;
 	line-height: 120%;
 	font-size: 20px;
-	&:hover {
+	@media (any-hover: hover) {
+		&:hover {
+			// будет работать при наведении курсором (на устройствах, оборудованных мышью)
+			text-decoration: underline;
+			color: rgb(125, 248, 160);
+		}
+	}
+	/* &:hover {
 		text-decoration: underline;
 		color: rgb(125, 248, 160);
-	}
-	@media (max-width: $md4+px) {
+	} */
+	@media (max-width: $md3+px) {
 		font-size: 25px;
 	}
 }
@@ -300,6 +310,8 @@
 	z-index: 5;
 	font-size: 22px;
 	color: #262f56;
+	background-color: transparent;
+
 	/* @media (max-width: 1024px) {
 		margin-right: 32px;
 	} */
@@ -439,5 +451,115 @@
 }
 /* .ibg {
 } */
-/* .icon-menu {
+
+//============================ МЕНЮ-БУРГЕР ===================================
+
+/* нарисовали иконку меню-бургер с одним span в html-файле */
+.menu__icon {
+	display: none;
+	@media (max-width: $md3+px) {
+		/* рисуем и покажем иконку(меню-бургер) */
+		@include adaptiv-value("margin-left", 32, 15, 1);
+		z-index: 5;
+		display: block;
+		position: relative;
+		width: 30px;
+		height: 18px;
+		cursor: pointer;
+		background-color: transparent;
+
+		/* с помощью 3-х объектов будем рисовать полоски иконки бургер-меню */
+		span,
+		&::before,
+		&::after {
+			left: 0;
+			position: absolute;
+			/* в процентах от родителя высота и ширина: */
+			height: 10%;
+			width: 100%;
+			transition: all 0.5s ease 0s;
+			background-color: #000;
+		}
+		&::before,
+		&::after {
+			content: ""; /* обязательно добавляется */
+		}
+		/* рисуем первую полоску: */
+		&::before {
+			top: 0;
+		}
+		/* рисуем вторую полоску: */
+		&::after {
+			bottom: 0;
+		}
+		/* рисуем третью полоску: */
+		span {
+			top: 50%;
+			transform: scale(1) translate(0px, -50%); /* здесь -50% вверх */
+		}
+
+		/* 32 */
+		/* анимируем иконку(меню-бургер) при нажатии на неё: */
+
+		/* 1-уберём полоску по середине: */
+		&._active span {
+			transform: scale(0) translate(0px, -50%);
+		}
+		/* 2-повернём верхнюю полоску: */
+		&._active::before {
+			top: 50%; /* полоска опустится с верху на середину */
+			transform: rotate(-45deg) translate(0px, -50%); /* полоска повернётся против часовой стрелки */
+		}
+		/* 3-повернём нижнюю полоску: */
+		&._active::after {
+			bottom: 50%; /* полоска поднимется с верху на середину */
+			transform: rotate(45deg) translate(0px, 50%); /* полоска повернётся против часовой стрелки */
+		}
+	}
+}
+
+//===================================================================================================================
+
+/* нарисовали иконку меню-бургер с 3-мя span в html-файле */
+/* .menu__icon {
+	display: none;
+	@media (max-width: $md3+px) {
+		position: relative;
+		display: block;
+		flex: 0 0 30px;
+		height: 18px;
+		cursor: pointer;
+		z-index: 5;
+		background-color: transparent;
+		span {
+			transition: all 0.5s ease 0s;
+
+			top: calc(50%-1px);
+			left: 0px;
+			position: absolute;
+			width: 100%;
+			height: 5px;
+			background-color: #000;
+			&:first-child {
+				top: 0px;
+			}
+			&:last-child {
+				top: auto;
+				bottom: 0px;
+			}
+		}
+		&._active {
+			span {
+				transform: scale(0);
+				&:first-child {
+					transform: rotate(-45deg);
+					top: calc(50%-1px);
+				}
+				&:last-child {
+					transform: rotate(45deg);
+					bottom: calc(50%-1px);
+				}
+			}
+		}
+	}
 } */

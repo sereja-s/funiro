@@ -416,6 +416,7 @@ body._lock {
   -o-transition: all 0.5s ease 0s;
   transition: all 0.5s ease 0s;
   font-size: 10px;
+  background-color: transparent;
 }
 
 /* .icon-arrow-down {
@@ -437,10 +438,7 @@ body._lock {
 
 .menu__sub-item:not(:last-child) {
   margin: 0 0 5px 0;
-  /* @media (max-width: $md3+px) {
-  	margin: 0 0 10px 0;
-  }
-  @media (max-width: $md4+px) {
+  /* @media (max-width: $md4+px) {
   	margin: 0 0 5px 0;
   } */
 }
@@ -451,11 +449,10 @@ body._lock {
   color: #fff;
   line-height: 120%;
   font-size: 20px;
-}
-
-.menu__sub-link:hover {
-  text-decoration: underline;
-  color: #7df8a0;
+  /* &:hover {
+  	text-decoration: underline;
+  	color: rgb(125, 248, 160);
+  } */
 }
 
 /* 19 */
@@ -490,6 +487,7 @@ body._lock {
   z-index: 5;
   font-size: 22px;
   color: #262f56;
+  background-color: transparent;
   /* @media (max-width: 1024px) {
   	margin-right: 32px;
   } */
@@ -634,7 +632,55 @@ body._lock {
 /* .ibg {
 } */
 
-/* .icon-menu {
+/* нарисовали иконку меню-бургер с одним span в html-файле */
+
+.menu__icon {
+  display: none;
+}
+
+/* нарисовали иконку меню-бургер с 3-мя span в html-файле */
+
+/* .menu__icon {
+	display: none;
+	@media (max-width: $md3+px) {
+		position: relative;
+		display: block;
+		flex: 0 0 30px;
+		height: 18px;
+		cursor: pointer;
+		z-index: 5;
+		background-color: transparent;
+		span {
+			transition: all 0.5s ease 0s;
+
+			top: calc(50%-1px);
+			left: 0px;
+			position: absolute;
+			width: 100%;
+			height: 5px;
+			background-color: #000;
+			&:first-child {
+				top: 0px;
+			}
+			&:last-child {
+				top: auto;
+				bottom: 0px;
+			}
+		}
+		&._active {
+			span {
+				transform: scale(0);
+				&:first-child {
+					transform: rotate(-45deg);
+					top: calc(50%-1px);
+				}
+				&:last-child {
+					transform: rotate(45deg);
+					bottom: calc(50%-1px);
+				}
+			}
+		}
+	}
 } */
 
 /* .footer {
@@ -1063,7 +1109,7 @@ body._lock {
     height: 100%;
     overflow: auto;
     top: 0;
-    left: 0;
+    left: -100%;
     -webkit-transition: left 0.5s ease 0s;
     -o-transition: left 0.5s ease 0s;
     transition: left 0.5s ease 0s;
@@ -1072,12 +1118,6 @@ body._lock {
     /* Что бы не было наложения шапки и выпадающего меню при скролле, сделаем прокладку между ними: */
     /* 33 */
     /* ВЕРНЁМ МЕНЮ */
-    /* &._active {
-    	left: 0;
-    	&::before {
-    		left: 0;
-    	}
-    } */
   }
 
   .menu__body::before {
@@ -1086,11 +1126,19 @@ body._lock {
     width: 100%;
     height: 50px;
     top: 0;
-    left: 0;
+    left: -100%;
     -webkit-transition: left 0.5s ease 0s;
     -o-transition: left 0.5s ease 0s;
     transition: left 0.5s ease 0s;
     z-index: 2;
+  }
+
+  .menu__body._active {
+    left: 0;
+  }
+
+  .menu__body._active::before {
+    left: 0;
   }
 
   .menu__item {
@@ -1125,16 +1173,107 @@ body._lock {
     visibility: hidden; */
   }
 
+  .menu__sub-item:not(:last-child) {
+    margin: 0 0 10px 0;
+  }
+
+  .menu__sub-link {
+    font-size: 25px;
+  }
+
+  .menu__icon {
+    /* рисуем и покажем иконку(меню-бургер) */
+    margin-left: 32px;
+    z-index: 5;
+    display: block;
+    position: relative;
+    width: 30px;
+    height: 18px;
+    cursor: pointer;
+    background-color: transparent;
+    /* с помощью 3-х объектов будем рисовать полоски иконки бургер-меню */
+    /* рисуем первую полоску: */
+    /* рисуем вторую полоску: */
+    /* рисуем третью полоску: */
+    /* 32 */
+    /* анимируем иконку(меню-бургер) при нажатии на неё: */
+    /* 1-уберём полоску по середине: */
+    /* 2-повернём верхнюю полоску: */
+    /* 3-повернём нижнюю полоску: */
+  }
+
+  .menu__icon span,
+  .menu__icon::before,
+  .menu__icon::after {
+    left: 0;
+    position: absolute;
+    /* в процентах от родителя высота и ширина: */
+    height: 10%;
+    width: 100%;
+    -webkit-transition: all 0.5s ease 0s;
+    -o-transition: all 0.5s ease 0s;
+    transition: all 0.5s ease 0s;
+    background-color: #000;
+  }
+
+  .menu__icon::before,
+  .menu__icon::after {
+    content: "";
+    /* обязательно добавляется */
+  }
+
+  .menu__icon::before {
+    top: 0;
+  }
+
+  .menu__icon::after {
+    bottom: 0;
+  }
+
+  .menu__icon span {
+    top: 50%;
+    -webkit-transform: scale(1) translate(0px, -50%);
+        -ms-transform: scale(1) translate(0px, -50%);
+            transform: scale(1) translate(0px, -50%);
+    /* здесь -50% вверх */
+  }
+
+  .menu__icon._active span {
+    -webkit-transform: scale(0) translate(0px, -50%);
+        -ms-transform: scale(0) translate(0px, -50%);
+            transform: scale(0) translate(0px, -50%);
+  }
+
+  .menu__icon._active::before {
+    top: 50%;
+    /* полоска опустится с верху на середину */
+    -webkit-transform: rotate(-45deg) translate(0px, -50%);
+        -ms-transform: rotate(-45deg) translate(0px, -50%);
+            transform: rotate(-45deg) translate(0px, -50%);
+    /* полоска повернётся против часовой стрелки */
+  }
+
+  .menu__icon._active::after {
+    bottom: 50%;
+    /* полоска поднимется с верху на середину */
+    -webkit-transform: rotate(45deg) translate(0px, 50%);
+        -ms-transform: rotate(45deg) translate(0px, 50%);
+            transform: rotate(45deg) translate(0px, 50%);
+    /* полоска повернётся против часовой стрелки */
+  }
+
   .main-slider__body {
     padding: 50px 0 0 0;
   }
 }
 
-@media (max-width: 479.98px) {
-  .menu__sub-link {
-    font-size: 25px;
+@media (max-width: 767.98px) and (max-width: 1270px) {
+  .menu__icon {
+    margin-left: calc(15px + 17 * ((100vw - 320px) / 950));
   }
+}
 
+@media (max-width: 479.98px) {
   .menu-footer__column {
     margin-bottom: 30px;
   }
@@ -1159,6 +1298,11 @@ body._lock {
   .menu__item:hover .menu__arrow,
   .menu__item:hover .menu__link {
     color: #e89f71;
+  }
+
+  .menu__sub-link:hover {
+    text-decoration: underline;
+    color: #7df8a0;
   }
 
   .actions-header__item--favorites:hover {
