@@ -381,7 +381,7 @@ if (iconMenu) {
 	iconMenu.addEventListener("click", function (e) {
 		/* 7-запретим скроллить страницу при открытом меню: */
 		//обатимся к body и будем добавлять(убирать) технический класс '_lock' при нажатой иконке(меню-бургер):
-		document.body.classList.toggle('_lock');
+		//document.body.classList.toggle('_lock');
 		/* 5-обращаемся к иконке(меню-бургер) и добавляем(убираем) класс '_active' при нажатии на неё: */
 		iconMenu.classList.toggle('_active'); /* чтобы анимнровать иконку(меню-бургер) при нажатии */
 		/* 6-обращаемся к объекту .menu__body и добавляем(убираем) класс '_active' при нажатии на неё: */
@@ -395,7 +395,7 @@ if (iconMenu) {
 
 //====================================================================================================================================
 //  Инициализируем SWIPER
-let sliders = document.querySelectorAll('._swiper');
+let sliders = document.querySelectorAll('.swiper');
 if (sliders) {
 	for (let index = 0; index < sliders.length; index++) {
 		let slider = sliders[index];
@@ -411,11 +411,11 @@ if (sliders) {
 
 			let slider_content = slider.innerHTML;
 			let slider_wrapper = document.createElement('div');
-			slider_wrapper.classList.add('swiper_wrapper');
+			slider_wrapper.classList.add('swiper-wrapper');
 			slider_wrapper.innerHTML = slider_content;
 			slider.innerHTML = '';
 			slider.appendChild(slider_wrapper);
-			slider.classList.add('swiper_bild');
+			slider.classList.add('swiper-bild');
 
 			if (slider.classList.contains('_swiper_scroll')) {
 				let sliderScroll = document.createElement('div');
@@ -458,9 +458,10 @@ if (sliderScrollitems.length > 0) {
 
 function sliders_bild_callback(params) { }
 
+/* 1-проверим существует ли класс '.slider-main__body': */
 if (document.querySelector('.slider-main__body')) {
 	new Swiper('.slider-main__body', {
-		//observer: true,
+		observer: true,
 		observeParents: true,
 		slidesPerView: 1,
 		spaceBetween: 32,
@@ -476,12 +477,16 @@ if (document.querySelector('.slider-main__body')) {
 			clickable: true,
 		},
 		//Arrows
+		// обратимся к конкретным кнопкам, указав в начале класс родителя:
 		navigation: {
-			nextEl: '.slider-main .slider-arrow--next', // обратились к конкретным кнопкам, указав в начале класс родителя
+			nextEl: '.slider-main .slider-arrow--next',
 			prevEl: '.slider-main .slider-arrow--prev',
 		}
 	});
 }
+
+
+
 
 
 

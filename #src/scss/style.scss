@@ -63,13 +63,15 @@ body {
 	// }
 }
 
+// общие стили для заголовков в footer
 .footer-title {
-	font-size: 24px;
-	line-height: 29 * 0.04167 * 100%;
+	@include adaptiv-value("font-size", 24, 20, 1);
+	line-height: 29 * /* 1/24 */ 0.04167 * 100%;
 	font-weight: 700;
 	color: #000000;
 }
 
+/* 10 */
 // общие стили для кнопок
 .btn {
 	display: inline-flex;
@@ -81,12 +83,16 @@ body {
 	min-height: 48px;
 }
 
+/* 12 */
 // общие стили стрелочек для слайдера
 .slider-arrows {
 	display: grid;
-	grid-template-columns: repeat(2, 48px); // (кол-во, размер)
-	column-gap: 8px; // расстояние между элементами (колонками)
+	grid-template-columns: repeat(2, 48px); // повторили стрелочку (кол-во, размер)
+	column-gap: 8px; // расстояние между элементами (колонками)->стрелочками
 }
+
+/* 13 */
+// рисуем стрелочку в кружке
 .slider-arrow {
 	border-radius: 50%;
 	height: 48px;
@@ -94,35 +100,47 @@ body {
 	color: $orangeColor;
 	font-size: 12px;
 	cursor: pointer;
-	&:hover {
-		color: #fff;
-		background-color: rgba(232, 159, 113, 1);
+	transition: all 0.5s ease 0s;
+	@media (any-hover: hover) {
+		&:hover {
+			// будет работать при наведении курсором (на устройствах, оборудованных мышью)
+			color: #fff;
+			background-color: rgba(232, 159, 113, 1);
+		}
 	}
 }
+/* 14 */
+// Предыдущая кнопка
 .slider-arrow--prev {
 	&::before {
 		transform: rotate(90deg);
 	}
 }
-
+/* 15 */
+// Следующая кнопка
 .slider-arrow--next {
 	&::before {
 		transform: rotate(-90deg);
 	}
 }
-
+/* 16 */
+//стили других стрелочек
 .slider-arrow--white {
 	box-shadow: 0 4px 14px 1px rgba(0, 0, 0, 0.16);
 	background-color: #fff;
-	&:hover {
-		background-color: $orangeColor;
-		color: #fff;
+	@media (any-hover: hover) {
+		&:hover {
+			// будет работать при наведении курсором (на устройствах, оборудованных мышью)
+			background-color: $orangeColor;
+			color: #fff;
+		}
 	}
 }
 
 @import "header";
 @import "footer";
 
+/* 1 */
 // общий класс - страница
 .page {
 	flex: 1 1 auto;
@@ -130,10 +148,13 @@ body {
 .page__main-slider {
 }
 
+/* 2 */
 // классы слайдера
 .main-slider {
 	background: #fcf8f3;
 }
+/* 3 */
+// создадим псевдоэлемент, который будет вырисовывать тёмно-бежевый цвет контейнера
 .main-slider__container {
 	position: relative;
 	@media (min-width: $md2+px) {
@@ -144,18 +165,20 @@ body {
 			top: 0;
 			// сдвинем элемент
 			width: 100vw;
-			right: 376px;
-
+			right: 376px; // по макету от правого края (относительно ограничивающего контейнера)
 			height: 100%;
 		}
 	}
 }
 /* .container {
 } */
+
+/* 4 */
+// отступы:
 .main-slider__body {
-	padding: 140px 0 0 0;
+	padding: 140px 0 0 0; // замер производим от верхней границы макета, а не от шапки (т.к. она фиксированная и тело своё теряет)
 	position: relative;
-	z-index: 2;
+	z-index: 2; // чтобы контент не перекрывался
 	@media (max-width: $md2+px) {
 		padding: 80px 0 0 0;
 	}
@@ -166,52 +189,68 @@ body {
 		display: flex; // Сделали flex-контейнер ( элементы станут в ряд )
 	}
 }
+
+/* 5 */
 .main-slider__content {
-	flex: 0 0 494 /* 1/1240 */ * 0.000806 * 100%;
+	flex: 0 0 494 /* 1/1240 */ * 0.000806 * 100%; // ширина контентной части/ ширина ограничивающего контейнера*100%
 }
 
+/* 7 */
 .content-main {
 	position: relative;
-	z-index: 5;
-	padding: 15px;
+	z-index: 5; // контентный блок будет над слайдерами
+	padding-left: 15px;
+	padding-right: 15px;
+	@include adaptiv-value("padding-top", 60, 15, 1);
+	@include adaptiv-value("padding-bottom", 60, 15, 1);
 	background: rgba(255, 255, 255, 0.72);
 	@media (min-width: $md2 + px) {
-		padding: 60px;
+		@include adaptiv-value("padding", 60, 1, 1);
 		background: rgba(255, 255, 255, 0.9);
 	}
 }
+
+/* 8 */
 .content-main__title {
-	font-size: 56px;
+	@include adaptiv-value("font-size", 50, 24, 1);
 	font-weight: 700;
 	line-height: 120%;
 	&:not(:last-child) {
 		margin: 0 0 16px 0;
 	}
 }
+
+/* 9 */
 .content-main__text {
 	font-weight: 500;
-	font-size: 20px;
+	@include adaptiv-value("font-size", 20, 16, 1);
 	line-height: 150%;
 	color: $grayColor;
 	&:not(:last-child) {
 		margin: 0 0 48px 0;
 	}
 }
+
+/* 11 */
 .content-main__button {
 	font-weight: 600;
-	min-height: 78px;
-	font-size: 20px;
+	@include adaptiv-value("min-height", 78, 45, 1);
+	@include adaptiv-value("font-size", 20, 16, 1);
 	background-color: $orangeColor;
 	color: #fff;
 	width: 100%;
-	&:hover {
-		background-color: #ffae7b;
+	@media (any-hover: hover) {
+		&:hover {
+			// будет работать при наведении курсором (на устройствах, оборудованных мышью)
+			background-color: #ffae7b;
+		}
 	}
 }
-
+/* 6 */
+// для блока СЛАЙДЕР:
 .main-slider__slider {
 	flex: 1 1 auto; // разрешаем слайдеру увеличиваться на всё оставшееся пространство
-	min-width: 0px;
+	min-width: 0px; // обязательное свойство, если слайдер находится внутри flex-элемента или сам является flex-элементом
 }
 .slider-main {
 }
