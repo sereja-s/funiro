@@ -72,7 +72,7 @@ window.onload = function () {
 		/* 2- в const targetElement получаем нажатый объект */
 		const targetElement = e.target;
 		// Условие: появляется выпадающее меню при щелчке на стрелочке (при ширине экрана больше 768px и только сенсорных экранах)
-		if (window.innerWidth > 768 && isMobile.any()) {
+		if (window.innerWidth > 767 && isMobile.any()) {
 			/* 3-Условие: если нажатый объект содержит класс 'menu__arrow': */
 			if (targetElement.classList.contains('menu__arrow')) {
 				/* 4-обращаемся к классу ближайшего родителя '.menu__item' и присваиваем(убираем) технический класс '_hover': */
@@ -470,7 +470,7 @@ if (document.querySelector('.slider-main__body')) {
 		loop: true,
 		loopAdditionalSlides: 5,
 		preloadImages: false,
-		parallax: true,
+		parallax: true, // для применения это эффекта нужно добавить в html-файле к slider-main__content атрибуты: data-swiper-parallax-opacity="0" data-swiper-parallax-x="-100%" ( когда слайд становится активным: контентная часть слайда движется по оси X движестя влево и проявляется(становится не прохрачной))
 		// Dotts
 		pagination: {
 			el: '.controls-slider-main__dotts',
@@ -485,9 +485,21 @@ if (document.querySelector('.slider-main__body')) {
 	});
 }
 
+// *********************************** Применение класса "ibg" для картинок (адаптив изображения): ********************************
 
+function ibg() {
 
+	let ibg = document.querySelectorAll(".ibg");
+	for (var i = 0; i < ibg.length; i++) {
+		if (ibg[i].querySelector('img')) {
+			ibg[i].style.backgroundImage = 'url(' + ibg[i].querySelector('img').getAttribute('src') + ')';
+		}
+	}
+}
 
+ibg();
+
+// *******************************************************************************************************************************
 
 
 

@@ -47,7 +47,7 @@ body {
 
 // основная сетка
 .container {
-	//min-width: $maxWidthContainer + px;
+	max-width: $maxWidthContainer + px;
 	padding: 0 15px; // поля, что бы содержимое контейнера не прилипало к краям
 	margin: 0 auto;
 
@@ -63,7 +63,27 @@ body {
 	// }
 }
 
-// общие стили для заголовков в footer
+// *********************************** Применение класса "ibg" для картинок (адаптив изображения): ********************************
+
+.ibg {
+	background-position: center;
+	background-size: cover;
+	background-repeat: no-repeat;
+	position: relative;
+}
+
+.ibg img {
+	width: 0;
+	height: 0;
+	position: absolute;
+	top: 0;
+	left: 0;
+	opacity: 0;
+	visibility: hidden;
+}
+
+// общие стили для заголовков в footer  =========================================================================================
+
 .footer-title {
 	@include adaptiv-value("font-size", 24, 20, 1);
 	line-height: 29 * /* 1/24 */ 0.04167 * 100%;
@@ -72,7 +92,8 @@ body {
 }
 
 /* 10 */
-// общие стили для кнопок
+// общие стили для кнопок ********************************************************************************************************
+
 .btn {
 	display: inline-flex;
 	justify-content: center;
@@ -83,8 +104,10 @@ body {
 	min-height: 48px;
 }
 
+//========================================== Элементы управления слайдером Swiper: ================================================
+
 /* 12 */
-// общие стили стрелочек для слайдера
+// ОБЩИЕ СТИЛИ ДЛЯ СТРЕЛОЧЕК (Swiper):
 .slider-arrows {
 	display: grid;
 	grid-template-columns: repeat(2, 48px); // повторили стрелочку (кол-во, размер)
@@ -94,7 +117,7 @@ body {
 /* 13 */
 // рисуем стрелочку в кружке
 .slider-arrow {
-	border-radius: 50%;
+	border-radius: 50%; // нарисовали круг вокруг стрелочки
 	height: 48px;
 	background-color: rgba(232, 159, 113, 0.3);
 	color: $orangeColor;
@@ -125,6 +148,7 @@ body {
 }
 /* 16 */
 //стили других стрелочек
+/* стрелочка в белом кружке: */
 .slider-arrow--white {
 	box-shadow: 0 4px 14px 1px rgba(0, 0, 0, 0.16);
 	background-color: #fff;
@@ -136,6 +160,69 @@ body {
 		}
 	}
 }
+
+// ОБЩИЕ СТИЛИ ДЛЯ ТОЧЕК (Swiper):
+
+/* Классы, которые Swiper добавляет автоматически(приего инициализации: */
+/* 17 */
+/* для оболочки точек: */
+.swiper-pagination-bullets {
+	display: flex;
+	flex-wrap: wrap;
+}
+/* 18 */
+/* для точек: */
+.swiper-pagination-bullet {
+	cursor: pointer;
+	flex: 0 0 27px; // ширина flex-элемента
+	height: 27px;
+	position: relative; // для абсолютного позиционирования ореола вокруг активной точки
+	/* отцентруем маленькую точку внутри: */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 2px 0; // отступы безопасности
+	background-color: transparent;
+	/* отступы между точками (с учётом ореола): */
+	&:not(:last-child) {
+		margin-right: 12px;
+	}
+	/* дорисуем маленькую точку для неактивного буллета: */
+	&::after {
+		content: "";
+		width: 11px;
+		height: 11px;
+		background-color: #08a03b;
+		border-radius: 50%;
+		transition: background-color 0.5s ease 0s;
+	}
+	/* рисуем ореол (оранжевую границу) вокруг активной точки: */
+	&::before {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		border-radius: 50%;
+		border: 1px solid $orangeColor;
+		transition: transform 0.5s ease 0s;
+		/* скроем ореол для не активной точки: */
+		transform: scale(0);
+	}
+}
+/* 19 */
+/* для активной точки: */
+.swiper-pagination-bullet-active {
+	&::after {
+		background-color: $orangeColor;
+	}
+	&::before {
+		/* покажем ореол для активной точки: */
+		transform: scale(1);
+	}
+}
+//==============================================================================================================================
 
 @import "header";
 @import "footer";
@@ -192,7 +279,15 @@ body {
 
 /* 5 */
 .main-slider__content {
+	/* 34 */
+	align-self: flex-start; // если текста в контентной части мало(нет), то карточку уведёт вверх
 	flex: 0 0 494 /* 1/1240 */ * 0.000806 * 100%; // ширина контентной части/ ширина ограничивающего контейнера*100%
+	/* 32 */
+	@include adaptiv-value("margin-bottom", 80, 15, 1);
+	/* 36 */
+	@media (max-width: $md2+px) {
+		margin: 0 -15px; // убираем отступы в контентной части (на карточке)
+	}
 }
 
 /* 7 */
@@ -251,38 +346,150 @@ body {
 .main-slider__slider {
 	flex: 1 1 auto; // разрешаем слайдеру увеличиваться на всё оставшееся пространство
 	min-width: 0px; // обязательное свойство, если слайдер находится внутри flex-элемента или сам является flex-элементом
+	/* 33 */
+	align-self: flex-end; // задает выравнивание вдоль поперечной оси для отдельно взятого flex-блока (слайдер прижимаем к низу) Если контента в контентной части будет много (слайдер будет уезжать вниз
+	/* 22 */
+	@media (min-width: $md2+px) {
+		padding: 0 0 0 32px;
+	}
 }
+
+/* 29 */
 .slider-main {
+	display: flex; // теперь вложенные объекты (элементы управления слайдера и тело слайдера) тоже станут flex-элементами
+	flex-direction: column;
+	align-items: flex-end; // элементы управления тоже уйдут вправо
+	/* 35 */
+	@media (max-width: $md2+px) {
+		align-items: stretch; // позволяем flex-элементам слайдера растягиваться
+		flex-direction: column-reverse;
+		//display: block;
+	}
 }
+
+/* 21 */
 .slider-main__controls {
+	margin: 0 0 20px 0;
+	/* 30 */
+	align-self: stretch; // элементы управления венули на прежнее место (дали возможность расширяться)
+	/* 38 */
+	@media (max-width: $md2+px) {
+		margin: 10px 0 20px 0;
+	}
 }
+/* 20 */
+/* оболочка всех элементов управления: */
 .controls-slider-main {
+	display: flex;
+	/* 31-1 */
+	//justify-content: space-between;
+	align-items: center;
 }
+/* 31-2 */
 .controls-slider-main__dotts {
+	flex: 1 1 auto; // позволили увеличиваться объкту с точками, поэтому стрелочки управления останутся приюитыми к правому краю
+	/* 41 */
+	@media (min-width: $md2+px) {
+		padding: 0 20px 0 0;
+	}
+	/* 39 */
+	@media (max-width: $md2+px) {
+		justify-content: center;
+	}
 }
 .controls-slider-main__arrows {
+	/* 40 */
+	@media (max-width: $md3+px) {
+		display: none;
+	}
 }
 
 .icon-arrow-down {
 }
 
+/* 28 */
 .slider-main__body {
+	overflow: visible; // тело слайдера не скрывает то содержимое, которое вылезло за границы блокa (слайды будут просматриваться сквозь прозрачный фон контента)
+	@media (min-width: $md2+px) {
+		@include adaptiv-value("width", 934, 290, 1);
+	}
+	/* 37 */
+	@media (max-width: $md2+px) {
+		margin: 0 -15px; // Растянем слайдер (для слайдера появится эффект отутствия границ)
+	}
 }
-._swiper {
-}
+
+/* 24-2 */
 .slider-main__slide {
+	position: relative;
 }
+
+/* 23 */
+/* оболочка картинки */
 .slider-main__image {
+	padding: 0 0 50% 0;
 }
-.ibg {
+
+//*************************
+.image {
+	margin-top: 5px;
+	&:not(:last-child) {
+		padding: 0 0 59.1% 0;
+	}
 }
+//*************************
+/* .ibg {
+} */
+
+/* 24-1 */
 .slider-main__content {
+	min-width: 295px; /* ограничим контейнер для контента: */
+	max-height: 300px;
+	overflow: auto;
+	color: inherit;
+	display: flex;
+	flex-direction: column;
+	@include adaptiv-value("padding", 24, 15, 1);
+	background-color: rgba(255, 255, 255, 0.35);
+	@media (min-width: $md3+px) {
+		position: absolute;
+		min-width: 350px;
+		@include adaptiv-value("right", 40, 0, 1);
+		@include adaptiv-value("bottom", 40, 0, 1);
+	}
 }
+
+/* 25 */
 .slider-main__title {
+	@include adaptiv-value("font-size", 22, 18, 1);
+	font-weight: 600;
+	line-height: 120%;
+	&:not(:last-child) {
+		margin: 0px 0px 4px 0px;
+	}
 }
+/* 26 */
 .slider-main__text {
+	line-height: 150%;
+	color: $mainColor;
+	&:not(:last-child) {
+		margin: 0px 0px 8px 0px;
+	}
 }
+/* 27 */
 .slider-main__price {
+	display: flex;
+	flex-direction: row-reverse; // переставили стрелочку с положения впереди(::before), как указано в иконочном шрифте в положение после(::after) текста
+	line-height: 150%;
+	align-items: center;
+	justify-content: space-between;
+	font-weight: 600;
+	@include adaptiv-value("font-size", 20, 16, 1);
+	// поставим впереди отступ безопасности:
+	&::before {
+		margin: 0 0 0 10px;
+		font-size: 12px; // указали размер стрелочки(иконочный шрифт), ::before-т.к. изначально стрелочка стояла впереди цены
+	}
 }
 .icon-arrow-link {
 }
