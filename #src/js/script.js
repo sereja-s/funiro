@@ -102,6 +102,29 @@ window.onload = function () {
 			document.querySelector('.search-form').classList.remove('_active');
 		}
 	}
+
+	// Изменение свойств Header(шапки) при прохождении контента под ней:
+
+	const headerElement = document.querySelector('.header');
+
+	//ФУНКЦИЯ, ВЫЗЫВАЕМАЯ В МОМЕНТ СРАБАТЫВАНИЯ:
+	const callback = function (entries, observer) {
+		/* условие: шапка находится в видимой части экрана: */
+		if (entries[0].isIntersecting) {
+			/* отнимается технический класс '_scroll' у шапки: */
+			headerElement.classList.remove('_scroll');
+		} else {
+			/* если контент заходит под шапку, то добавляется */
+			headerElement.classList.add('_scroll');
+		}
+	};
+
+	/* отлавливать прокрученные пиксели под шапкой будем с помощью объекта IntersectionObserver, переданного в headerObserver: */
+	const headerObserver = new IntersectionObserver(callback);
+	/* передаём в функцию observe наш элемент headerElement и она начинает следить за ним: */
+	headerObserver.observe(headerElement);
+
+
 }
 
 //==================================================================================================================================
