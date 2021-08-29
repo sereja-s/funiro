@@ -91,6 +91,15 @@ body {
 	color: #000000;
 }
 
+// Общие стили для заголовков в секции ТОВАРЫ ===================================================================================
+
+.title {
+	@include adaptiv-value("font-size", 40, 24, 1);
+	font-weight: 700;
+	line-height: 120%;
+	text-align: center;
+}
+
 /* 10 */
 // общие стили для кнопок ********************************************************************************************************
 
@@ -102,12 +111,23 @@ body {
 	text-align: center;
 	transition: all 0.5s ease 0s;
 	min-height: 48px;
+	&--white {
+		color: $orangeColor;
+		background-color: #fff;
+		@media (any-hover: hover) {
+			&:hover {
+				// будет работать при наведении курсором (на устройствах, оборудованных мышью)
+				background-color: $orangeColor;
+				color: #fff;
+			}
+		}
+	}
 }
 
 //========================================== Элементы управления слайдером Swiper: ================================================
 
 /* 12 */
-// ОБЩИЕ СТИЛИ ДЛЯ СТРЕЛОЧЕК (Swiper):
+// ОБЩИЕ СТИЛИ ДЛЯ СТРЕЛОЧЕК (Swiper): --------------------------------------------------------------------------------------------
 .slider-arrows {
 	display: grid;
 	grid-template-columns: repeat(2, 48px); // повторили стрелочку (кол-во, размер)
@@ -161,7 +181,7 @@ body {
 	}
 }
 
-// ОБЩИЕ СТИЛИ ДЛЯ ТОЧЕК (Swiper):
+// ОБЩИЕ СТИЛИ ДЛЯ ТОЧЕК (Swiper): ------------------------------------------------------------------------------------------------
 
 /* Классы, которые Swiper добавляет автоматически(приего инициализации: */
 /* 17 */
@@ -547,4 +567,153 @@ body {
 .advantages__text {
 	line-height: 150%;
 	color: $grayColor;
+}
+
+//***************************************************** секция ТОВАРЫ ***************************************************************
+
+.page__products {
+}
+
+/* 1 */
+.products {
+	@include adaptiv-value("padding-bottom", 44, 30, 1);
+}
+.products__container {
+}
+.container {
+}
+
+/* 2 */
+.products__title {
+	margin: 0 0 32px 0;
+}
+
+/* 3 */
+// grid-контейнер для товаров
+.products__items {
+	display: grid;
+	gap: 32px;
+	// (распространим товары по всему контейнеру), (мин.(из шаблона) и макс. ширина карточек):
+	grid-template-columns: repeat(auto-fit, minmax(285px, 1fr));
+}
+.product__item {
+}
+
+/* 4 */
+// карточка товара
+.item-product {
+	background: #f4f5f7;
+	display: flex;
+	flex-direction: column;
+	position: relative;
+}
+
+/* 5 */
+// блок с лейблами
+.item-product__labels {
+	position: absolute;
+	z-index: 2;
+	display: flex;
+	flex-direction: column;
+	@include adaptiv-value("right", 24, 10, 1);
+	@include adaptiv-value("top", 24, 10, 1);
+}
+
+/* 6 */
+// лейбл
+.item-product__label {
+	flex: 0 0 48px;
+	width: 48px;
+	border-radius: 50%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: #fff;
+	font-weight: 500;
+	&:not(:last-child) {
+		margin: 0 0 10px 0;
+	}
+}
+/* 7 */
+.item-product__label--sale {
+	background: #e97171;
+}
+/* 8 */
+.item-product__label--new {
+	background: #2ec1ac;
+}
+
+/* 9 */
+// картинка карточки
+.item-product__image {
+	// с классом ibg, что бы картинка выводилась, её размер нужно указывать следующим образом:
+	padding: 0 0 105.6% 0; // (отступ)поле вниз высчитываются: (высота / ширину) * 100%
+}
+
+/* 10 */
+// тело карточки
+.item-product__body {
+	flex: 1 1 auto; // позволим блоку увеличиваться при необходимости
+	padding: 16px 16px 30px 16px;
+	display: flex;
+	flex-direction: column;
+}
+/* 11 */
+// контент карточки
+.item-product__content {
+	flex: 1 1 auto;
+}
+/* 12 */
+// заголовок карточки
+.item-product__title {
+	@include adaptiv-value("font-size", 24, 20, 1);
+	font-weight: 600;
+	line-height: 120%;
+	margin: 0 0 8px 0;
+}
+/* 13 */
+//текст карточки
+.item-product__text {
+	color: $grayColor;
+	line-height: 150%;
+	margin: 0 0 8px 0;
+} /* 14 */
+// цены карточки (общие свойства)
+.item-product__prices {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	line-height: 150%;
+}
+/* 15 */
+// цена
+.item-product__price {
+	@include adaptiv-value("font-size", 20, 16, 1);
+	font-weight: 600;
+}
+/* 16 */
+// старая цена
+.item-product__price--old {
+	@include adaptiv-value("font-size", 16, 14, 1);
+	font-weight: normal;
+	margin: 0 0 0 16px;
+	color: #b0b0b0;
+}
+.item-product__actions {
+}
+.actions-product {
+}
+.actions-product__body {
+}
+.actions-product__button {
+}
+.btn {
+}
+.btn--white {
+}
+.actions-product__link {
+}
+.icon-share {
+}
+.icon-favorite {
 }
