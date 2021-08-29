@@ -222,17 +222,16 @@ body {
 		transform: scale(1);
 	}
 }
-//==============================================================================================================================
 
 @import "header";
 @import "footer";
+
+//===============================================  секция ГЛАВНОГО СЛАЙДЕРА  ========================================================
 
 /* 1 */
 // общий класс - страница
 .page {
 	flex: 1 1 auto;
-}
-.page__main-slider {
 }
 
 /* 2 */
@@ -257,8 +256,6 @@ body {
 		}
 	}
 }
-/* .container {
-} */
 
 /* 4 */
 // отступы:
@@ -404,9 +401,6 @@ body {
 	}
 }
 
-.icon-arrow-down {
-}
-
 /* 28 */
 .slider-main__body {
 	overflow: visible; // тело слайдера не скрывает то содержимое, которое вылезло за границы блокa (слайды будут просматриваться сквозь прозрачный фон контента)
@@ -427,7 +421,7 @@ body {
 /* 23 */
 /* оболочка картинки */
 .slider-main__image {
-	padding: 0 0 50% 0;
+	padding: 0 0 59.1% 0;
 }
 
 //*************************
@@ -438,8 +432,6 @@ body {
 	}
 }
 //*************************
-/* .ibg {
-} */
 
 /* 24-1 */
 .slider-main__content {
@@ -491,5 +483,68 @@ body {
 		font-size: 12px; // указали размер стрелочки(иконочный шрифт), ::before-т.к. изначально стрелочка стояла впереди цены
 	}
 }
-.icon-arrow-link {
+
+//************************************************ секция ПРИЕМУЩЕСТВА **************************************************************
+
+/* .page__advantages {
+}
+ */
+/* 1 */
+.advantages {
+	@include adaptiv-value("padding-top", 88, 30, 1);
+	@include adaptiv-value("padding-bottom", 88, 30, 1);
+}
+
+/* 2 */
+.advantages__container {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+/* .container {
+} */
+
+/* 3 */
+// контентные элементы
+// создаём grid-контейнер:
+.advantages__item {
+	display: inline-grid;
+	padding: 15px 0;
+	// настроим grid-сетку (формируем 2-а ряда / размер для 1-го - в рх(под иконку) и остальное место займёт 2-ряд(фрагмент):
+	grid-template: auto auto / 85px 1fr;
+	@media (max-width: $md2+px) {
+		min-width: 280px;
+	}
+	// для мобилных устройств перестроим сетку:
+	@media (max-width: $md3+px) {
+		grid-template: auto auto / auto 1fr;
+	}
+}
+
+/* 4 */
+// иконки
+.advantages__icon {
+	text-align: center;
+	align-self: center;
+	// позволяем иконке занять 2-а ряда:
+	grid-row: span 2; // рядом располагаются: 1-ряд(заголовок), 2-ой(текст)
+	@media (max-width: $md3+px) {
+		padding: 0 15px 0 0;
+	}
+}
+
+/* 5 */
+// заголовок
+.advantages__title {
+	font-weight: 600;
+	font-size: 18px;
+	line-height: 150%;
+	margin: 0 0 2px 0;
+}
+
+/* 6 */
+// текст
+.advantages__text {
+	line-height: 150%;
+	color: $grayColor;
 }

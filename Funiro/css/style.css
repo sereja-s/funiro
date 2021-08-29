@@ -1062,9 +1062,6 @@ body._lock {
   position: relative;
 }
 
-/* .container {
-} */
-
 /* 4 */
 
 .main-slider__body {
@@ -1220,7 +1217,7 @@ body._lock {
 /* оболочка картинки */
 
 .slider-main__image {
-  padding: 0 0 50% 0;
+  padding: 0 0 59.1% 0;
 }
 
 .image {
@@ -1230,9 +1227,6 @@ body._lock {
 .image:not(:last-child) {
   padding: 0 0 59.1% 0;
 }
-
-/* .ibg {
-} */
 
 /* 24-1 */
 
@@ -1300,6 +1294,65 @@ body._lock {
 .slider-main__price::before {
   margin: 0 0 0 10px;
   font-size: 12px;
+}
+
+/* .page__advantages {
+}
+ */
+
+/* 1 */
+
+.advantages {
+  padding-top: 88px;
+  padding-bottom: 88px;
+}
+
+/* 2 */
+
+.advantages__container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+/* .container {
+} */
+
+/* 3 */
+
+.advantages__item {
+  display: inline-grid;
+  padding: 15px 0;
+  grid-template: auto auto/85px 1fr;
+}
+
+/* 4 */
+
+.advantages__icon {
+  text-align: center;
+  align-self: center;
+  grid-row: span 2;
+}
+
+/* 5 */
+
+.advantages__title {
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 150%;
+  margin: 0 0 2px 0;
+}
+
+/* 6 */
+
+.advantages__text {
+  line-height: 150%;
+  color: #898989;
 }
 
 @media (min-width: 767.98px) {
@@ -1516,6 +1569,14 @@ body._lock {
   .slider-main__price {
     font-size: calc(16px + 4 * ((100vw - 320px) / 950));
   }
+
+  .advantages {
+    padding-top: calc(30px + 58 * ((100vw - 320px) / 950));
+  }
+
+  .advantages {
+    padding-bottom: calc(30px + 58 * ((100vw - 320px) / 950));
+  }
 }
 
 @media (max-width: 991.98px) {
@@ -1582,6 +1643,10 @@ body._lock {
 
   .slider-main__body {
     margin: 0 -15px;
+  }
+
+  .advantages__item {
+    min-width: 280px;
   }
 }
 
@@ -1767,6 +1832,14 @@ body._lock {
 
   .controls-slider-main__arrows {
     display: none;
+  }
+
+  .advantages__item {
+    grid-template: auto auto/auto 1fr;
+  }
+
+  .advantages__icon {
+    padding: 0 15px 0 0;
   }
 }
 
