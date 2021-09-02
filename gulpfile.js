@@ -12,6 +12,7 @@ let path = {
 		js: project_folder + "/js/",
 		img: project_folder + "/img/",
 		fonts: project_folder + "/fonts/",
+		json: project_folder + "/json/"
 	},
 	src: {
 		html: [source_folder + "/*.html", "!" + source_folder + "/_*.html"],
@@ -19,13 +20,16 @@ let path = {
 		js: source_folder + "/js/script.js",
 		img: source_folder + "/img/**/*.+(png|jpg|gif|ico|svg|webp)",
 		fonts: source_folder + "/fonts/*.ttf",
+		json: source_folder + "/json/*.*"
 
 	},
 	watch: {
 		html: source_folder + "/**/*.html",
 		css: source_folder + "/scss/**/*.scss",
 		js: source_folder + "/js/**/*.js",
-		img: source_folder + "/img/**/*.{jpg,png,svg,gif,ico,webp}"
+		img: source_folder + "/img/**/*.{jpg,png,svg,gif,ico,webp}",
+		json: source_folder + "/json/*.*"
+
 	},
 	clean: "./" + project_folder + "/"
 }
@@ -37,6 +41,7 @@ let { src, dest } = require('gulp'),
 	fileinclude = require("gulp-file-include"),
 	del = require("del"),
 	scss = require('gulp-sass')(require('sass')),
+	plumber = require('gulp-plumber'),
 	autoprefixer = require("gulp-autoprefixer"),
 	group_media = require("gulp-group-css-media-queries"),
 	clean_css = require("gulp-clean-css"),
@@ -62,8 +67,14 @@ function browserSync(params) {
 	})
 }
 
+function json() {
+	return src(path.src.json)
+		.pipe(plumber())
+		.pipe(dest(path.build.json))
+}
 function html() {
 	return src(path.src.html)
+		.pipe(plumber())
 		.pipe(fileinclude())
 		.pipe(webphtml())
 		.pipe(dest(path.build.html))
@@ -181,13 +192,14 @@ function watchFiles(params) {
 	gulp.watch([path.watch.css], css);
 	gulp.watch([path.watch.js], js);
 	gulp.watch([path.watch.img], images);
+	gulp.watch([path.watch.json], json);
 }
 
 function clean(params) {
 	return del(path.clean);
 }
 
-let build = gulp.series(clean, gulp.parallel(js, css, html, images, fonts), fontsStyle);
+let build = gulp.series(clean, gulp.parallel(js, css, html, json, images, fonts), fontsStyle);
 let watch = gulp.parallel(build, watchFiles, browserSync);
 
 exports.fontsStyle = fontsStyle;
@@ -196,6 +208,7 @@ exports.images = images;
 exports.js = js;
 exports.css = css;
 exports.html = html;
+exports.json = json;
 exports.build = build;
 exports.watch = watch;
 exports.default = watch;

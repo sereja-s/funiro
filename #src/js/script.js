@@ -101,9 +101,30 @@ window.onload = function () {
 			/* указываем убрать этот технический класс у объекта '.search-form' */
 			document.querySelector('.search-form').classList.remove('_active');
 		}
+
+		// для кнопки под карточками товаров:
+		/* 1-просмотрим событие "click" на всём документе и отловим нажатие на нужный объект(кнопку) 'products__more': */
+		if (targetElement.classList.contains('products__more')) {
+			/* 2-передадим нажатый объект в функцию getProducts: */
+			getProducts(targetElement);
+			/* 3-отменим действие по умолчанию (что бы страница не перезагружалась): */
+			e.preventDefault();
+		}
+
+		// добавление товаров в корзину:
+		/* 1-просмотрим событие "click" на всём документе и отловим нажатие на нужный объект(кнопку) 'actions-product__button': */
+		if (targetElement.classList.contains('actions-product__button')) {
+			/* 2- ищем для нажатой конопки среди ближайших родителей обхект 'item-product' и получаем его data-атрибута pid: */
+			const productId = targetElement.closest('.item-product').dataset.pid;
+			/* 3- кнопку и полученный Id отправляем в функцию addToCart: */
+			addToCart(targetElement, productId);
+			e.preventDefault();
+		}
 	}
 
-	// Изменение свойств Header(шапки) при прохождении контента под ней:
+	//================================================== ФУНКЦИИ ==================================================================
+
+	// Изменение свойств Header(шапки) при прохождении контента под ней: 
 
 	const headerElement = document.querySelector('.header');
 
@@ -125,7 +146,185 @@ window.onload = function () {
 	headerObserver.observe(headerElement);
 
 
+	// Асинхронная (т.к. будем использовать технологию	AJAX с помощью fetch) функция getProducts ********************************
+	//	Подгружаем карточки товаров:
+	/* 1- получаем в функцию нажатйю кнопку: */
+	async function getProducts(button) {
+		// условие: у кнопки нет технического класса '_hold': (эта проверка не даст нажать на кнопку множестово раз (деактивирует её), пока не выполнится дествие)
+		if (!button.classList.contains('_hold')) {
+			/* 2- добавляем технический класса '_hold': */
+			button.classList.add('_hold');
+			/* 3- в константу получаем путь к файлу: */
+			const file = "json/products.json";
+			/* 4- отправляем GET-запрос с помощью fetch и сохраняем результат в переменной response: */
+			let response = await fetch(file, {
+				method: "GET"
+			});
+			// условие: проверим найден и получен ли файл (всё ok):
+			if (response.ok) {
+				/* 5- подгружаем в переменную result содержимое переменной response в json-формате: */
+				let result = await response.json();
+				/* 5- результат отправляем в функцию loadProducts: */
+				loadProducts(result);
+				/* 6- убираем технический класс '_hold': */
+				button.classList.remove('_hold');
+				/* 7- удаляем кнопку (т.к. запрос тестовый ( что бы не подгружатись одни и теже товары)): */
+				button.remove();
+			} else {
+				alert("Ошибка")
+			}
+		}
+	}
+
+
+	/* 1- в функцию loadProducts передаём результат работы предыдущей функции в переменную data: */
+	function loadProducts(data) {
+		/* 2-создаём объект куда будем товары подгружать: */
+		const productsItems = document.querySelector('.products__items');
+		/* 3- перебираем элементы массива item с товарами-products в json-файле:*/
+		data.products.forEach(item => {
+			/* 4- создадим ряд констант, которым присвоим значения каздого товара: */
+			const productId = item.id;
+			const productUrl = item.url;
+			const productImage = item.image;
+			const productTitle = item.title;
+			const productText = item.text;
+			const productPrice = item.price;
+			const productOldPrice = item.priceOld;
+			const productShareUrl = item.shareUrl;
+			const productLikeUrl = item.likeUrl;
+			const productLabels = item.labels;
+
+			/* 5- интегрируем эти константы в html-код карточки товара: */
+			let productTemplateStart = `<article data-pid="${productId}" class="products__item item-product">`;
+			let productTemplateEnd = `</article>`;
+
+			let productTemplateLabels = '';
+			// проверка: есть ли лейблы:
+			if (productLabels) {
+				let productTemplateLabelsStart = `<div class="item-product__labels">`;
+				let productTemplateLabelsEnd = `</div>`;
+				let productTemplateLabelsContent = '';
+
+				productLabels.forEach(labelItem => {
+					productTemplateLabelsContent += `<div class="item-product__label item-product__label--${labelItem.type}">${labelItem.value}</div>`;
+				});
+
+				productTemplateLabels += productTemplateLabelsStart;
+				productTemplateLabels += productTemplateLabelsContent;
+				productTemplateLabels += productTemplateLabelsEnd;
+			}
+
+			let productTemplateImage = `
+		<a href="${productUrl}" class="item-product__image ibg">
+			<img src="img/products/${productImage}" alt="${productTitle}">
+		</a>
+	`;
+
+			let productTemplateBodyStart = `<div class="item-product__body">`;
+			let productTemplateBodyEnd = `</div>`;
+
+			let productTemplateContent = `
+		<div class="item-product__content">
+			<h3 class="item-product__title">${productTitle}</h3>
+			<div class="item-product__text">${productText}</div>
+		</div>
+	`;
+
+			let productTemplatePrices = '';
+			let productTemplatePricesStart = `<div class="item-product__prices">`;
+			let productTemplatePricesCurrent = `<div class="item-product__price">Rp ${productPrice}</div>`;
+			let productTemplatePricesOld = `<div class="item-product__price item-product__price--old">Rp ${productOldPrice}</div>`;
+			let productTemplatePricesEnd = `</div>`;
+
+			productTemplatePrices = productTemplatePricesStart;
+			productTemplatePrices += productTemplatePricesCurrent;
+			if (productOldPrice) {
+				productTemplatePrices += productTemplatePricesOld;
+			}
+			productTemplatePrices += productTemplatePricesEnd;
+
+			let productTemplateActions = `
+		<div class="item-product__actions actions-product">
+			<div class="actions-product__body">
+				<a href="" class="actions-product__button btn btn--white">Add to cart</a>
+				<a href="${productShareUrl}" class="actions-product__link icon-share">Share</a>
+				<a href="${productLikeUrl}" class="actions-product__link icon-favorite">Like</a>
+			</div>
+		</div>
+	`;
+
+			let productTemplateBody = '';
+			productTemplateBody += productTemplateBodyStart;
+			productTemplateBody += productTemplateContent;
+			productTemplateBody += productTemplatePrices;
+			productTemplateBody += productTemplateActions;
+			productTemplateBody += productTemplateBodyEnd;
+
+			let productTemplate = '';
+			productTemplate += productTemplateStart;
+			productTemplate += productTemplateLabels;
+			productTemplate += productTemplateImage;
+			productTemplate += productTemplateBody;
+			productTemplate += productTemplateEnd;
+
+			// выведем константу productTemplate в html-файл:
+			productsItems.insertAdjacentHTML('beforeend', productTemplate);
+
+		});
+	}
+
+	// Добавление товаров в корзину при нажатии на кнопку addToCart:
+	/* 1- в параметры функции addToCart передаём нажатую кнопку и полученный Id: */
+	function addToCart(productButton, productId) {
+		// условие: отсутствие у нажатой кнопки технического класса '_hold':
+		if (!productButton.classList.contains('_hold')) {
+			/* 2- нажатой кнопке добавим технический класс '_hold': */
+			productButton.classList.add('_hold');
+			/* 3- нажатой кнопке добавим технический класс '_fly': */
+			productButton.classList.add('_fly');
+
+			// Создадим ряд констант:
+			/* 4- константа cart будет содержать объект в шапке с икрнкой корзины: */
+			const cart = document.querySelector('.cart-header__icon');
+			/* 5- константа product будет содержать объект у которого в data-атрибуте есть полученный уникальный Id: */
+			const product = document.querySelector('[data-pid="${productId}"]');
+			/* 6- в константу попадёт объект внутри конкретного продукта с классом '.item-product__image' (картинка того товара у которого нажали кнопку addToCart): */
+			const productImage = document.querySelector('.item-product__image');
+
+			// Для создания эффекта летящей картинки, сделаем клон(дубль) картинки донного товара:			
+			/* 7- создаём константу productImageFly, в которой обращаемся к productImage и клонируем этот объект: */
+			const productImageFly = productImage.cloneNode(true);
+
+			// Получим размеры и координаты картинки товара:
+			/* 8- создаём константы, которым присваиваем ширину, высоту оригинальной картинки, позицию сверху и слева: */
+			const productImageFlyWidth = productImage.offsetWidth;
+			const productImageFlyHeight = productImage.offsetHeight;
+			const productImageFlyTop = productImage.getBoundingClientRect().top;
+			const productImageFlyLeft = productImage.getBoundingClientRect().left;
+
+			// Применим полученные размеры для клонированной картинки:
+			/* 9- меняем у неё класс на класс: */
+			productImageFly.setAttribute('class', '__flyImage _ibg');
+			/* 10- присваиваем полученные размеры и позицию клонированной картинке: */
+
+			productImageFly.style.cssText =
+				`
+			left: ${productImageFlyLeft} px;
+			top: ${productImageFlyTop} px;
+			width: ${productImageFlyWidth} px;
+			height: ${productImageFlyHeight} px;
+		`;
+
+			/* 11- поместим клон картинки в самый конец тега body: */
+			document.body.append(productImageFly);
+
+		}
+	}
+
+
 }
+
 
 //==================================================================================================================================
 

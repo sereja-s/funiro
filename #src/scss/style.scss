@@ -82,6 +82,15 @@ body {
 	visibility: hidden;
 }
 
+//************************************* стили клонированной картинки ***********************************************************
+
+.__flyImage .ibg {
+	opacity: 1;
+	position: fixed;
+	z-index: 100;
+	transition: all 1s ease 0s;
+}
+
 // общие стили для заголовков в footer  =========================================================================================
 
 .footer-title {
@@ -571,17 +580,17 @@ body {
 
 //***************************************************** секция ТОВАРЫ ***************************************************************
 
-.page__products {
-}
+/* .page__products {
+} */
 
 /* 1 */
 .products {
 	@include adaptiv-value("padding-bottom", 44, 30, 1);
 }
-.products__container {
-}
-.container {
-}
+/* .products__container {
+} */
+/* .container {
+} */
 
 /* 2 */
 .products__title {
@@ -596,8 +605,6 @@ body {
 	// (распространим товары по всему контейнеру), (мин.(из шаблона) и макс. ширина карточек):
 	grid-template-columns: repeat(auto-fit, minmax(285px, 1fr));
 }
-.product__item {
-}
 
 /* 4 */
 // карточка товара
@@ -606,6 +613,15 @@ body {
 	display: flex;
 	flex-direction: column;
 	position: relative;
+	@media (any-hover: hover) {
+		&:hover {
+			// будет работать при наведении курсором (на устройствах, оборудованных мышью)
+			.item-product__actions {
+				opacity: 1;
+				visibility: visible;
+			}
+		}
+	}
 }
 
 /* 5 */
@@ -698,22 +714,89 @@ body {
 	font-weight: normal;
 	margin: 0 0 0 16px;
 	color: #b0b0b0;
+	text-decoration: line-through;
 }
+
+/* 17 */
+// Оболочка накрывающего блока карточки
 .item-product__actions {
+	// для устройств с ссенсорным экраном
+	@media (any-hover: none) {
+		padding: 15px 0 0 0;
+	}
+	@media (any-hover: hover) {
+		/* 21 */
+		// скроем накрывающего блока карточки и будем показывать только при наведении в .item-product:
+		opacity: 0;
+		visibility: hidden;
+
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		transition: all 0.5s ease 0s;
+		background-color: rgba(58, 58, 58, 0.5);
+		z-index: 3;
+	}
 }
-.actions-product {
-}
+/* .actions-product {
+} */
+
+/* 18 */
+// тело накрывающего блока
 .actions-product__body {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
 }
+
+/* 19 */
+// кнопка накрывающего блока
 .actions-product__button {
+	flex: 1 1 100%; // позволим кнопке увеличиваться на всю строку (она вытолкнет остальных на следующую строку)
+	&:not(:last-child) {
+		margin: 0 0 24px 0;
+	}
 }
-.btn {
-}
-.btn--white {
-}
+
+/* 20 */
+// ссылки накрывающего блока
 .actions-product__link {
+	display: flex;
+	align-items: center;
+	color: #f77b07;
+	font-weight: 600;
+	transition: color 0.5s ease 0s;
+	// обратимся к иконке:
+	&::before {
+		margin: 0 10px 0 0;
+		font-size: 16px;
+	}
+	@media (any-hover: hover) {
+		color: #fff;
+		&:hover {
+			// будет работать при наведении курсором (на устройствах, оборудованных мышью)
+			color: $orangeColor;
+		}
+	}
 }
-.icon-share {
+
+//********************************************** кнопка под карточками товаров *****************************************************
+
+/* 1 */
+// оболочка для кнопки
+.products__footer {
+	padding: 32px 0 0 0;
+	text-align: center;
 }
-.icon-favorite {
+
+/* 2 */
+// кнопка
+.products__more {
+	border: 1px solid $orangeColor;
+	min-width: 245px;
 }
