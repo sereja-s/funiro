@@ -118,8 +118,36 @@ window.onload = function () {
 			const productId = targetElement.closest('.item-product').dataset.pid;
 			/* 3- кнопку и полученный Id отправляем в функцию addToCart: */
 			addToCart(targetElement, productId);
-			e.preventDefault();
+			e.preventDefault(); // отменим действие по умолчанию (что бы страница не перезагружалась)
 		}
+
+		// покажем(скроем) выпадающий список корзины:
+		// условие: определим нажатый объект .cart-header__icon (иконку корзины) или у нажатого объета в родителях есть объект .cart-header__icon (span с количеством товара): 
+		if (targetElement.classList.contains('.cart-header__icon') || targetElement.closest('.cart-header__icon')) {
+			// условие: существуют ли товары в выпадающем списке корзины
+			if (document.querySelector('.cart-list').children.length > 0) {
+				/* 1- для объекта .cart-header добавим(уберём) технический класс '_active': */
+				document.querySelector('.cart-header').classList.toggle('_active');
+			}
+			e.preventDefault(); // отменим действие по умолчанию (что бы страница не перезагружалась)
+
+			// сделаем что бы выпадающий список корзины закрывался при клике на любое другое место: 
+			// условие: нажатый злемент не должен содержать в родителях '.cart-header' и также не должен содержать класс: 'actions-product__button'(кнопка добавления в корзину) что бы при нажатии у товара кнопки: добавить в корзину, выпадающий список товаров корзины не закрывался:
+		} else if (!targetElement.closest('.cart-header') && !targetElement.classList.contains('actions-product__button')) {
+			/* 2- у объкта '.cart-header' отнимаем технический класс '_active':  */
+			document.querySelector('.cart-header').classList.remove('_active');
+		}
+
+		// Реализуем функционал удаления из корзины:
+		// отловим клик по ссылке '.cart-list__delete': */
+		if (targetElement.classList.contains('cart-list__delete')) {
+			/* 1- в константу productId сохраняем результат поиска у нажатого элемента(кнопки delete ) родителя с классом .cart-list__item(элемент выпадающего списка товаров в корзине)-его Id: */
+			const productId = targetElement.closest('.cart-list__item').dataset.cartPid;
+			/* 2- функцию updateCart третим параметром указываем false( т.е. собираемся удалить элемент списка, а не добавить): */
+			updateCart(targetElement, productId, false)
+			e.preventDefault(); // отменим действие по умолчанию (что бы страница не перезагружалась)
+		}
+
 	}
 
 	//================================================== ФУНКЦИИ ==================================================================
@@ -216,7 +244,7 @@ window.onload = function () {
 			}
 
 			let productTemplateImage = `
-		<a href="${productUrl}" class="item-product__image ibg">
+		<a href="${productUrl}" class="item-product__image _ibg">
 			<img src="img/products/${productImage}" alt="${productTitle}">
 		</a>
 	`;
@@ -274,7 +302,8 @@ window.onload = function () {
 		});
 	}
 
-	// Добавление товаров в корзину при нажатии на кнопку addToCart:
+	// Добавление товаров в корзину при нажатии на кнопку addToCart(нажатой кнопке добавим технический класс '_hold'):
+
 	/* 1- в параметры функции addToCart передаём нажатую кнопку и полученный Id: */
 	function addToCart(productButton, productId) {
 		// условие: отсутствие у нажатой кнопки технического класса '_hold':
@@ -288,9 +317,10 @@ window.onload = function () {
 			/* 4- константа cart будет содержать объект в шапке с икрнкой корзины: */
 			const cart = document.querySelector('.cart-header__icon');
 			/* 5- константа product будет содержать объект у которого в data-атрибуте есть полученный уникальный Id: */
-			const product = document.querySelector('[data-pid="${productId}"]');
+			const product = document.querySelector(`[data-pid="${productId}"]`);
+
 			/* 6- в константу попадёт объект внутри конкретного продукта с классом '.item-product__image' (картинка того товара у которого нажали кнопку addToCart): */
-			const productImage = document.querySelector('.item-product__image');
+			const productImage = product.querySelector('.item-product__image');
 
 			// Для создания эффекта летящей картинки, сделаем клон(дубль) картинки донного товара:			
 			/* 7- создаём константу productImageFly, в которой обращаемся к productImage и клонируем этот объект: */
@@ -299,25 +329,135 @@ window.onload = function () {
 			// Получим размеры и координаты картинки товара:
 			/* 8- создаём константы, которым присваиваем ширину, высоту оригинальной картинки, позицию сверху и слева: */
 			const productImageFlyWidth = productImage.offsetWidth;
-			const productImageFlyHeight = productImage.offsetHeight;
+			const productImageFlyHeight = productImage.offsetHeigth;
 			const productImageFlyTop = productImage.getBoundingClientRect().top;
 			const productImageFlyLeft = productImage.getBoundingClientRect().left;
 
 			// Применим полученные размеры для клонированной картинки:
 			/* 9- меняем у неё класс на класс: */
-			productImageFly.setAttribute('class', '__flyImage _ibg');
+			productImageFly.setAttribute('class', '_flyImage _ibg');
 			/* 10- присваиваем полученные размеры и позицию клонированной картинке: */
 
 			productImageFly.style.cssText =
 				`
-			left: ${productImageFlyLeft} px;
-			top: ${productImageFlyTop} px;
-			width: ${productImageFlyWidth} px;
-			height: ${productImageFlyHeight} px;
-		`;
+		left: ${productImageFlyLeft}px;
+		top: ${productImageFlyTop}px;
+		width:${productImageFlyWidth}px;
+		height: ${productImageFlyHeight}px;
+			`;
 
 			/* 11- поместим клон картинки в самый конец тега body: */
 			document.body.append(productImageFly);
+
+			// отправим клон картинки в корзину: 
+			/* 12-получаем координаты корзины: */
+			const cartFlyLeft = cart.getBoundingClientRect().left;
+			const cartFlyTop = cart.getBoundingClientRect().top;
+
+			/* 13- присваиваем клону картинки новые значения и укажем. что картинка будет лететь и уменьшаться: */
+			productImageFly.style.cssText =
+				`
+		left: ${cartFlyLeft}px;
+		top: ${cartFlyTop}px;		
+		opacity: 0;
+		width: 0;
+		height: 0px;
+		`;
+			// выведем количество товара в корзине
+			/* 14-отловим момент когда клон карточки товара долетит до корзины: */
+			productImageFly.addEventListener('transitionend', function () {
+				// проверка: существует ли у нажатой кнопки технический класс '_fly'(клон карточки товара долетел):
+				if (productButton.classList.contains('_fly')) {
+					/* 15- удаляем клон карточки товара из body: */
+					productImageFly.remove();
+					/* 16- в функцию updateCart пердаём кнопку и Id товара: */
+					updateCart(productButton, productId);
+					/* 17- убираем у кнопки технический класс '_fly' */
+					productButton.classList.remove('_fly');
+				}
+			});
+		}
+
+	}
+
+	// функция UpdateCart будет формировать(добавлять и удалять( с использованием параметра productAdd)) в корзине количество товаров и список товаров
+	function updateCart(productButton, productId, productAdd = true) {
+		// находим и сохраняем:
+		const cart = document.querySelector('.cart-header'); // общую оболочку карзины,
+		const cartIcon = cart.querySelector('.cart-header__icon'); // иконку корзины,
+		const cartQuantity = cartIcon.querySelector('span'); // указатель количества товара рядом с корзиной,
+		const cartProduct = document.querySelector(`[data-cart-pid="${productId}"]`); // товар ,находящийся в списке внутри корзины,
+		const cartList = document.querySelector('.cart-list');
+
+		// Добавляем товар (параметр productAdd = true):
+		if (productAdd) {
+			// проверка: существует ли 'span' со списком товаров:
+			if (cartQuantity) {
+				/* добавляем +1 к уже существующему количеству товаров: */
+				cartQuantity.innerHTML = ++cartQuantity.innerHTML;
+			} else {
+				/* если нет, тогда создаём такой 'span' со значением 1 */
+				cartIcon.insertAdjacentHTML('beforeend', `<span>1</span>`)
+			}
+
+			// Формируем список товаров в корзине:
+			//проверка: есть ли спиок(товар в списке):
+			if (!cartProduct) {
+				//если нет, тогда формируем его:
+				/* 1- в константу product получаем объект оригинального товара: */
+				const product = document.querySelector(`[data-pid="${productId}"]`);
+				/* 2- получаем его картинку: */
+				const cartProductImage = product.querySelector('.item-product__image').innerHTML;
+				/* 3- получаем его название: */
+				const cartProductTitle = product.querySelector('.item-product__title').innerHTML;
+				/* 4- в константу формируем HTML-код карточки добавляемого товара, который будем добавлять(выводить) в список: */
+				const cartProductContent = `
+				<a href="" class="cart-list__image ibg">${cartProductImage}</a>
+				<div class="cart-list__body">
+					<a href="" class="cart-list__title">${cartProductTitle}</a>
+					<div class="cart-list__quantity">Quantity: <span>1</span></div>
+					<a href="" class="cart-list__delete">Delete</a>
+				</div>
+			`;
+				// интегрируем полученные данные в HTML-код:
+				/* 5- формируем список и вставляем HTML-код карточки товара переданного вкорзину: */
+				cartList.insertAdjacentHTML('beforeend', `<li data-cart-pid="${productId}" class="cart-list__item">${cartProductContent}
+				</li>`);
+			} else {
+				// если такой товар в корине есть:
+				/* 6- в константу cartProductQuantity получаем количество этого товара в корзине: */
+				const cartProductQuantity = cartProduct.querySelector('.cart-list__quantity span');
+				/* 7- добавляем +1 товар: */
+				cartProductQuantity.innerHTML = ++cartProductQuantity.innerHTML;
+			}
+
+			// после всех действий, отнимаем тезнический класс '_hold' (что бы могли добавлять этот товар в корзину ещё раз):
+			productButton.classList.remove('_hold');
+		} else {
+
+			// добавим функционал удаления из корзины:
+			/* 1- в константу cartProductQuantity получаем количество этого товара в корзине: */
+			const cartProductQuantity = cartProduct.querySelector('.cart-list__quantity span');
+			/* 2- убираем -1 товар: */
+			cartProductQuantity.innerHTML = --cartProductQuantity.innerHTML;
+			// проверка: если количество товара ноль:
+			if (!parseInt(cartProductQuantity.innerHTML)) {
+				/* 3- удаляем этот товар: */
+				cartProduct.remove();
+			}
+
+			// уменьшаем на единицу общее количество товара:
+			const cartQuantityValue = --cartQuantity.innerHTML;
+			// проверка: если общее количество товара больше нуля:
+			if (cartQuantityValue) {
+				/* 4-изменяем значение в кружке(span): */
+				cartQuantity.innerHTML = cartQuantityValue;
+			} else {
+				/* 5- если товара нет, удаляем кружок(span): */
+				cartQuantity.remove();
+				/* 6- убираем тезнический класс _active у выпадающего списка товаров корзины: */
+				cart.classList.remove('_active');
+			}
 
 		}
 	}

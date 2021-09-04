@@ -446,10 +446,109 @@
 	}
 }
 
+//************************************************** список товаров в корзине ********************************************************
+/* 1 */
+// выпадающий список
+.cart-list {
+	overflow: auto; // чтобы в выпадающем списке появился скролл, когда товаров добавится много
+	max-height: 200px; // ограничили высоту выпадаюего списка товаров
+}
+
+/* 2 */
+// объект списка(добавленный товар)
+.cart-list__item {
+	display: flex;
+	align-items: flex-start;
+	&:not(:last-child) {
+		margin: 0 0 15px 0;
+	}
+}
+
+/* 3 */
+// картинка добавленного списка
+.cart-list__image {
+	flex: 0 0 55px; // ширина картинки
+	height: 55px;
+}
+
+/* 4 */
+// тело карточки
+.cart-list__body {
+	flex: 1 1 auto; // позволим увеличиваться
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	padding: 0 0 0 10px;
+}
+/* 5 */
+// заголовки(ссылки)
+.cart-list__title {
+	color: inherit;
+	font-weight: 600;
+	transition: color 0.5s ease 0s;
+	margin: 0 0 5px 0;
+	@media (any-hover: hover) {
+		&:hover {
+			// будет работать при наведении курсором (на устройствах, оборудованных мышью)
+			color: $orangeColor;
+		}
+	}
+}
+/* 6 */
+// количество товаров
+.cart-list__quantity {
+	font-size: 14px;
+	margin: 0 0 5px 0;
+}
+/* 7 */
+// кнопка удалить
+.cart-list__delete {
+	color: red;
+	font-size: 14px;
+	@media (any-hover: hover) {
+		&:hover {
+			// будет работать при наведении курсором (на устройствах, оборудованных мышью)
+			text-decoration: underline;
+		}
+	}
+}
+
 /* .icon-cart {
 } */
-/* .cart-header__body {
-} */
+/* 8 */
+// тело выпадающего списка
+.cart-header__body {
+	background: #f4f5f7;
+	border: 1px solid #e0e0e0;
+	position: absolute;
+	top: 30px;
+	right: 0;
+	padding: 10px;
+	width: 250px;
+	z-index: 0;
+	// скроем выпадающее меню:
+	/* 001 */
+	opacity: 0;
+	visibility: hidden;
+	transition: all 0.5s ease 0s;
+	transform: translate(0, 20px); // опустим выпадающий список корзины
+	/* 002 */
+	// укажем отображать объект, когда родительский элемент будет получать техничекий класс '_active'^
+	._active & {
+		opacity: 1;
+		visibility: visible;
+		transform: translate(0 0);
+	}
+	@media (max-width: $md2+px) {
+		top: 25px;
+	}
+	@media (max-width: $md3+px) {
+		position: fixed;
+		top: 50px;
+		left: 0;
+		width: 55%;
+	}
+}
 /* .cart-header__list {
 } */
 /* .cart-list {
