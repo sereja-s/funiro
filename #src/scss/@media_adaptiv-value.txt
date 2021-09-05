@@ -14,6 +14,7 @@
 
 
 
+
 @media (any-hover: hover) {
 		&:hover {			
 				// будет работать при наведении курсором (на устройствах, оборудованных мышью)				
@@ -28,6 +29,22 @@
 
 
 transition: all 0.5s ease 0s;
+
+
+
+
+transform: translate(0, 0);
+
+
+
+
+
+calc(100% + 48px);
+
+
+
+
+data-swiper-parallax-opacity="0" data-swiper-parallax-x="-100%"
 	
 
 	

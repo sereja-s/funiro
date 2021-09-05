@@ -146,6 +146,7 @@ body {
 /* 13 */
 // рисуем стрелочку в кружке
 .slider-arrow {
+	pointer-events: auto;
 	border-radius: 50%; // нарисовали круг вокруг стрелочки
 	height: 48px;
 	background-color: rgba(232, 159, 113, 0.3);
@@ -807,5 +808,215 @@ body {
 	&._hold {
 		opacity: 0.5;
 		cursor: default;
+	}
+}
+
+//**************************************************** секция Rooms ****************************************************************
+
+/* .page__rooms {
+} */
+/* 1 */
+.rooms {
+	background: #fcf8f3;
+	@include adaptiv-value("padding-top", 40, 30, 1);
+	@include adaptiv-value("padding-bottom", 40, 30, 1);
+}
+/* 2 */
+.rooms__container {
+	@media (min-width: $md2+px) {
+		display: flex;
+	}
+}
+/* .container {
+} */
+/* 3 */
+.rooms__body {
+	flex: 0 0 465 * 0.000806 /* 1/1240 */ * 100%;
+	position: relative;
+	z-index: 5;
+	align-self: center; // по центру этого flex-контейнера
+	@media (min-width: $md2+px) {
+		@include adaptiv-value("padding-right", 80, 30, 1);
+	}
+}
+/* 4 */
+.rooms__title {
+	&:not(:last-child) {
+		margin: 0 0 8px 0;
+	}
+
+	text-align: left;
+}
+/* .title {
+} */
+/* 5 */
+.rooms__text {
+	line-height: 150%;
+	font-weight: 500;
+	&:not(:last-child) {
+		margin: 0 0 24px 0px;
+	}
+}
+/* 6 */
+.rooms__button {
+	background: $orangeColor;
+	color: snow;
+	min-width: 180px;
+	@media (any-hover: hover) {
+		&:hover {
+			// будет работать при наведении курсором (на устройствах, оборудованных мышью)
+			background-color: #e7915b;
+			color: #09f57f;
+		}
+	}
+}
+/* 7 */
+.rooms__slider {
+	flex: 1 1 auto;
+	min-width: 0; // обязательное свойство для слайдера если он или его родитель flex-элемент
+	align-self: flex-start; // слайдер будет в верху сввоего блока
+}
+
+/* 19 */
+// общая оболочка слайдера
+.slider-rooms {
+	position: relative; // т.к. стрелки мы будем позиционировать относительно этого объекта
+}
+/* 10 */
+// оболочка слайдов
+.slider-rooms__body {
+	overflow: visible; // покажем слайдды за пределами контейнера
+	position: relative;
+	/* 11 */
+	// закроем слайды слева "покрывалом":
+	&::before {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 100%;
+		width: 100vw;
+		background-color: #fcf8f3;
+		z-index: 2;
+		transform: translate(-100%, 0); // уехали этим блоком на 100% влево
+	}
+}
+/* 8 */
+.slider-rooms__slide {
+	width: 372px;
+	position: relative;
+	overflow: hidden;
+	@include adaptiv-value("min-height", 585, 400, 1);
+	/* 13 */
+	// для активного слайда:
+	&.swiper-slide-active {
+		// обращаемся к картинке:
+		.slider-rooms__image {
+			padding: 0 0 170% 0;
+			height: 100%;
+		}
+	}
+}
+/* 9 */
+.slider-rooms__image {
+	padding: 0 0 144% 0;
+	transition: height 0.5s ease 0s;
+	height: 100%;
+	/* 12 */
+	@media (min-width: $md3+px) {
+		height: 83%;
+	}
+}
+/* 14 */
+.slider-rooms__content {
+	position: absolute;
+	color: inherit;
+	max-width: 240px;
+	@include adaptiv-value("left", 24, 15, 1);
+	@include adaptiv-value("bottom", 24, 15, 1);
+	@include adaptiv-value("padding", 32, 15, 1);
+	background: rgba(255, 255, 255, 0.55);
+	/* 15 */
+	// стрелочка
+	&::before {
+		position: absolute;
+		bottom: 0;
+		right: 0;
+		transform: translate(100%, 0); // выдвинули стрелочку вправо
+		width: 48px;
+		height: 48px;
+		background-color: $orangeColor;
+		color: #f9f1e7;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+}
+
+.slider-rooms__label {
+}
+/* 16 */
+// построим grid-сетку:
+.label-slider {
+	display: grid;
+	color: $dackgrayColor;
+	gap: 8px;
+	align-items: center;
+	justify-content: start;
+	grid-template-columns: auto 27px auto;
+	&:not(:last-child) {
+		margin: 0 0 8px 0;
+	}
+}
+.label-slider__number {
+}
+
+/* 17 */
+.label-slider__line {
+	height: 1px;
+	background-color: $dackgrayColor;
+}
+.label-slider__text {
+}
+/* 18 */
+.slider-rooms__title {
+	font-weight: 600;
+	@include adaptiv-value("font-size", 28, 24, 1);
+}
+/* 20 */
+// оболочка для стрелок управления
+.slider-rooms__arrows {
+	pointer-events: none; // отключили реакцию на щелчёк у всего объекта, стелочкам управления включим в общих стилях
+	position: absolute;
+	top: 50%;
+	transform: translate(0, -50%); // разместили стрелочки по центру (отняли половину высоты)
+	width: calc(100% + 48px); // что бы стрлочки выходили за ширину блока
+	left: -24px;
+	z-index: 5;
+	justify-content: space-between;
+}
+.slider-arrows {
+}
+.slider-arrow {
+}
+.slider-arrow--white {
+	background: rgba(255, 255, 255, 0.25);
+}
+.slider-arrow--prev {
+}
+.icon-arrow-down {
+}
+.slider-arrow--next {
+}
+/* 21 */
+.slider-rooms__dotts {
+	//margin-top: 50px;
+	@media (min-width: $md3+px) {
+		margin-top: -55px;
+		margin-left: 400px;
+		/* position: absolute;
+		bottom: 30px;
+		width: 100%;
+		left: 396px; */
 	}
 }

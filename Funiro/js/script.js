@@ -244,7 +244,7 @@ window.onload = function () {
 			}
 
 			let productTemplateImage = `
-		<a href="${productUrl}" class="item-product__image _ibg">
+		<a href="${productUrl}" class="item-product__image ibg">
 			<img src="img/products/${productImage}" alt="${productTitle}">
 		</a>
 	`;
@@ -820,6 +820,8 @@ if (sliderScrollitems.length > 0) {
 
 function sliders_bild_callback(params) { }
 
+//================================================== Главный слайдер =============================================================
+
 /* 1-проверим существует ли класс '.slider-main__body': */
 if (document.querySelector('.slider-main__body')) {
 	new Swiper('.slider-main__body', {
@@ -843,6 +845,35 @@ if (document.querySelector('.slider-main__body')) {
 		navigation: {
 			nextEl: '.slider-main .slider-arrow--next',
 			prevEl: '.slider-main .slider-arrow--prev',
+		}
+	});
+}
+
+//===================================================== Room слайдер =============================================================
+
+/* 1-проверим существует ли класс '.slider-rooms__body': */
+if (document.querySelector('.slider-rooms__body')) {
+	new Swiper('.slider-rooms__body', {
+		observer: true,
+		observeParents: true,
+		slidesPerView: 'auto',
+		spaceBetween: 24,
+		watchOverflow: true,
+		speed: 800,
+		loop: true,
+		loopAdditionalSlides: 5,
+		preloadImages: false,
+		parallax: true, // для применения это эффекта нужно добавить в html-файле к slider-rooms__content атрибуты: data-swiper-parallax-opacity="0" data-swiper-parallax-x="-100%" ( когда слайд становится активным: контентная часть слайда движется по оси X движестя влево и проявляется(становится не прохрачной))
+		// Dotts
+		pagination: {
+			el: '.slider-rooms__dotts',
+			clickable: true,
+		},
+		//Arrows
+		// обратимся к конкретным кнопкам, указав в начале класс родителя:
+		navigation: {
+			nextEl: '.slider-rooms .slider-arrow--next',
+			prevEl: '.slider-rooms .slider-arrow--prev',
 		}
 	});
 }
