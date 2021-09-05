@@ -1729,9 +1729,6 @@ body._lock {
   cursor: default;
 }
 
-/* .page__rooms {
-} */
-
 /* 1 */
 
 .rooms {
@@ -1741,9 +1738,6 @@ body._lock {
 }
 
 /* 2 */
-
-/* .container {
-} */
 
 /* 3 */
 
@@ -1766,9 +1760,6 @@ body._lock {
 .rooms__title:not(:last-child) {
   margin: 0 0 8px 0;
 }
-
-/* .title {
-} */
 
 /* 5 */
 
@@ -1931,8 +1922,8 @@ body._lock {
   -webkit-transform: translate(0, -50%);
       -ms-transform: translate(0, -50%);
           transform: translate(0, -50%);
-  width: calc(100% + 48px);
-  left: -24px;
+  width: calc(100% - 48px);
+  left: 24px;
   z-index: 5;
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
@@ -1940,10 +1931,47 @@ body._lock {
 }
 
 .slider-arrow--white {
-  background: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.45);
 }
 
 /* 21 */
+
+/* 1 */
+
+.tips {
+  padding-top: 44px;
+  padding-bottom: 44px;
+}
+
+/* 2 */
+
+.tips__title {
+  margin: 0 0 32px 0;
+}
+
+/* 3 */
+
+.slider-tips {
+  position: relative;
+}
+
+/* 4 */
+
+.slider-tips__slide {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+/* 5 */
+
+.slider-tips__image {
+  padding: 0 0 64.2% 0;
+}
 
 @media (min-width: 767.98px) {
   .menu__list {
@@ -2089,6 +2117,13 @@ body._lock {
 
   .rooms__body {
     padding-right: 80px;
+  }
+}
+
+@media (min-width: 1282px) {
+  .slider-rooms__arrows {
+    width: calc(100% + 48px);
+    left: -24px;
   }
 }
 
@@ -2246,6 +2281,14 @@ body._lock {
   .slider-rooms__title {
     font-size: calc(24px + 4 * ((100vw - 320px) / 950));
   }
+
+  .tips {
+    padding-top: calc(30px + 14 * ((100vw - 320px) / 950));
+  }
+
+  .tips {
+    padding-bottom: calc(30px + 14 * ((100vw - 320px) / 950));
+  }
 }
 
 @media (max-width: 991.98px) {
@@ -2320,6 +2363,10 @@ body._lock {
 
   .advantages__item {
     min-width: 280px;
+  }
+
+  .rooms__body {
+    margin: 0 0 30px 0;
   }
 }
 
@@ -2521,6 +2568,13 @@ body._lock {
   .advantages__icon {
     padding: 0 15px 0 0;
   }
+
+  .slider-rooms__dotts {
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    padding: 15px 0 0 0;
+  }
 }
 
 @media (max-width: 767.98px) and (max-width: 1270px) {
@@ -2545,6 +2599,14 @@ body._lock {
 
   .menu-footer__column {
     margin-bottom: 30px;
+  }
+
+  .rooms__slider {
+    margin: 0 -15px;
+  }
+
+  .slider-rooms__slide {
+    width: 100%;
   }
 }
 
@@ -2692,6 +2754,11 @@ body._lock {
   .rooms__button:hover {
     background-color: #e7915b;
     color: #09f57f;
+  }
+
+  .slider-tips__slide:hover {
+    -webkit-box-shadow: 0 0 32 rgba(97, 97, 97, 0.2);
+            box-shadow: 0 0 32 rgba(97, 97, 97, 0.2);
   }
 }
 

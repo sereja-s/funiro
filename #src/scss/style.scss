@@ -813,8 +813,6 @@ body {
 
 //**************************************************** секция Rooms ****************************************************************
 
-/* .page__rooms {
-} */
 /* 1 */
 .rooms {
 	background: #fcf8f3;
@@ -827,8 +825,7 @@ body {
 		display: flex;
 	}
 }
-/* .container {
-} */
+
 /* 3 */
 .rooms__body {
 	flex: 0 0 465 * 0.000806 /* 1/1240 */ * 100%;
@@ -838,17 +835,18 @@ body {
 	@media (min-width: $md2+px) {
 		@include adaptiv-value("padding-right", 80, 30, 1);
 	}
+	@media (max-width: $md2+px) {
+		margin: 0 0 30px 0;
+	}
 }
 /* 4 */
 .rooms__title {
 	&:not(:last-child) {
 		margin: 0 0 8px 0;
 	}
-
 	text-align: left;
 }
-/* .title {
-} */
+
 /* 5 */
 .rooms__text {
 	line-height: 150%;
@@ -875,6 +873,9 @@ body {
 	flex: 1 1 auto;
 	min-width: 0; // обязательное свойство для слайдера если он или его родитель flex-элемент
 	align-self: flex-start; // слайдер будет в верху сввоего блока
+	@media (max-width: $md4+px) {
+		margin: 0 -15px; // убрали рамки по бокам
+	}
 }
 
 /* 19 */
@@ -916,6 +917,9 @@ body {
 			height: 100%;
 		}
 	}
+	@media (max-width: $md4+px) {
+		width: 100%;
+	}
 }
 /* 9 */
 .slider-rooms__image {
@@ -953,8 +957,6 @@ body {
 	}
 }
 
-.slider-rooms__label {
-}
 /* 16 */
 // построим grid-сетку:
 .label-slider {
@@ -968,16 +970,13 @@ body {
 		margin: 0 0 8px 0;
 	}
 }
-.label-slider__number {
-}
 
 /* 17 */
 .label-slider__line {
 	height: 1px;
 	background-color: $dackgrayColor;
 }
-.label-slider__text {
-}
+
 /* 18 */
 .slider-rooms__title {
 	font-weight: 600;
@@ -990,33 +989,105 @@ body {
 	position: absolute;
 	top: 50%;
 	transform: translate(0, -50%); // разместили стрелочки по центру (отняли половину высоты)
-	width: calc(100% + 48px); // что бы стрлочки выходили за ширину блока
-	left: -24px;
+	width: calc(100% - 48px); // что бы стрлочки сблизились
+	left: 24px;
 	z-index: 5;
 	justify-content: space-between;
+	@media (min-width: $md1+px) {
+		width: calc(100% + 48px); // что бы стрлочки выходили за ширину блока
+		left: -24px;
+	}
+}
+
+.slider-arrow--white {
+	background: rgba(255, 255, 255, 0.45);
+}
+
+/* 21 */
+.slider-rooms__dotts {
+	@media (min-width: $md3+px) {
+		margin-top: -55px;
+		margin-left: 400px;
+
+		/* position: absolute;
+		bottom: 30px;
+		width: 100%;
+		left: 396px; */
+	}
+	@media (max-width: $md3+px) {
+		justify-content: center;
+		padding: 15px 0 0 0;
+	}
+}
+
+//*************************************************** секция Tips *****************************************************************
+
+.page__tips {
+}
+/* 1 */
+.tips {
+	@include adaptiv-value("padding-top", 44, 30, 1);
+	@include adaptiv-value("padding-bottom", 44, 30, 1);
+}
+.tips__container {
+}
+.container {
+}
+/* 2 */
+.tips__title {
+	margin: 0 0 32px 0;
+}
+.title {
+}
+.tips__slider {
+}
+/* 3 */
+// общая оболочка
+.slider-tips {
+	position: relative;
+}
+.slider-tips__body {
+}
+.swiper {
+}
+/* 4 */
+// слайд
+.slider-tips__slide {
+	display: flex;
+	flex-direction: column;
+	@media (any-hover: hover) {
+		&:hover {
+			// будет работать при наведении курсором (на устройствах, оборудованных мышью)
+			box-shadow: 0 0 32 rgba(97, 97, 97, 0.2);
+		}
+	}
+}
+/* 5 */
+// оболочка картинки
+.slider-tips__image {
+	padding: 0 0 64.2% 0;
+}
+.ibg {
+}
+.slider-tips__content {
+}
+.slider-tips__title {
+}
+.slider-tips__text {
+}
+.slider-tips__dotts {
+}
+.slider-tips__arrows {
 }
 .slider-arrows {
 }
 .slider-arrow {
 }
 .slider-arrow--white {
-	background: rgba(255, 255, 255, 0.25);
 }
 .slider-arrow--prev {
 }
 .icon-arrow-down {
 }
 .slider-arrow--next {
-}
-/* 21 */
-.slider-rooms__dotts {
-	//margin-top: 50px;
-	@media (min-width: $md3+px) {
-		margin-top: -55px;
-		margin-left: 400px;
-		/* position: absolute;
-		bottom: 30px;
-		width: 100%;
-		left: 396px; */
-	}
 }

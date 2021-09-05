@@ -878,6 +878,33 @@ if (document.querySelector('.slider-rooms__body')) {
 	});
 }
 
+//===================================================== Tips cлайдер =============================================================
+
+/* 1-проверим существует ли класс '.slider-tips__body': */
+if (document.querySelector('.slider-tips__body')) {
+	new Swiper('.slider-tips__body', {
+		observer: true,
+		observeParents: true,
+		slidesPerView: 3,
+		spaceBetween: 32,
+		watchOverflow: true,
+		speed: 800,
+		loop: true,
+
+		// Dotts
+		pagination: {
+			el: '.slider-tips__dotts',
+			clickable: true,
+		},
+		//Arrows
+		// обратимся к конкретным кнопкам, указав в начале класс родителя:
+		navigation: {
+			nextEl: '.slider-tips .slider-arrow--next',
+			prevEl: '.slider-tips .slider-arrow--prev',
+		}
+	});
+}
+
 // *********************************** Применение класса "ibg" для картинок (адаптив изображения): ********************************
 
 function ibg() {
