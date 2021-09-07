@@ -462,6 +462,68 @@ window.onload = function () {
 		}
 	}
 
+	//***************************************** Галлерея (срабатыает при движении курсора) ***************************************
+
+	/* 1- получим в константу furniture тело галлереи: */
+	const furniture = document.querySelector('.furniture__body');
+	// проверка на существоввание такого объекта и на то что экран не сенсорный:
+	if (furniture && !isMobile.any()) {
+		/* 2- добавим константу furnitureItems в которую передадим объект который будет двигаться: */
+		const furnitureItems = document.querySelector('.furniture__items');
+		/* 3- передадим в константу коллекцию всех колонок(что бы высчитать ширину контента галлереи):  */
+		const furnitureColumn = document.querySelectorAll('.furniture__column');
+
+		/* 4- в константу передадим скорость анимации (получим из data-атрибута у объета '.furniture__body'): */
+		const speed = furniture.dataset.speed;
+		/* 5- объявим пременные позиции и процентной позиции: */
+		let positionX = 0;
+		let coordXprocent = 0;
+
+		// создадим главную функцию:
+		function setMouseGalleryStyle() {
+			/* 6-вычислим актуальный размер всего контента(перберём все колонки и выислим их общий размер): */
+			let furnitureItemsWidth = 0;
+			furnitureColumn.forEach(element => {
+				furnitureItemsWidth += element.offsetWidth;
+			});
+
+			/* 7- получим разницу ширины всего контента и видимой части: */
+			const furnitureDifferent = furnitureItemsWidth - furniture.offsetWidth;
+			/* 8- в константу distX передаём смещение положения курсора(чтобы галлерея двигалась, реагируя на смещение кусора от середины экрана): */
+			const distX = Math.floor(coordXprocent - positionX);
+
+			/* 9- сохраним в переменной positionX с учётом скорости: */
+			positionX = positionX = (distX * speed);
+			/* 10- вычисляем позицию относительно раницы ширин: */
+			let position = furnitureDifferent / 200 * positionX;
+			/* 11- обращаемся к объекту, который собираемся двигать и присваиваем полученное значение со знаком минус(чтобы галлерея длигалась в противоположную движению курсора сторону): */
+			furnitureItems.style.cssText = ` transform: translate3d(${-position}px,0, 0); `;
+			/* 12- запустим аниацию внутри данной функции: */
+			// будем запускать анимацию, только если есть ,что двигать (модуль const distX больше нуля):
+			if (Math.abs(distX) > 0) {
+				requestAnimationFrame(setMouseGalleryStyle);
+			} else {
+				// иначе (distX) дойдёт до нуля, у обекта '.furniture__body' убираем технический класс '_init'
+				furniture.classList.remove('_init');
+			}
+		}
+
+		// запустим прослушку движения мыши в '.furniture__body':
+		furniture.addEventListener("mousemove", function (e) {
+			/* 13- получаем видимую ширину: */
+			const furnitureWidth = furniture.offsetWidth;
+			/* 14- вчисляем ноль, (когда курсор посередине): */
+			const coordX = e.pageX - furnitureWidth / 2;
+			/* 15- получаем проценты: */
+			coordXprocent = coordX / furnitureWidth * 200;
+
+			//запускаем анимацию, когда у '.furniture__body' нет технического класса '_init':
+			if (!furniture.classList.contains('_init')) {
+				requestAnimationFrame(setMouseGalleryStyle);
+				furniture.classList.add('_init');
+			}
+		});
+	}
 
 }
 
@@ -643,7 +705,7 @@ if (spoilersArray.length > 0) {
 	}
 }
 
-// SlideToggle (фцнкции, которые позволяют нам анимировать (скрывать и показывать) объкты)
+// SlideToggle (функции, которые позволяют нам анимировать (скрывать и показывать) объкты)
 
 /* функция _slideUp, анимированно скрывает объект */
 let _slideUp = (target, duration = 500) => {
@@ -901,6 +963,20 @@ if (document.querySelector('.slider-tips__body')) {
 		navigation: {
 			nextEl: '.slider-tips .slider-arrow--next',
 			prevEl: '.slider-tips .slider-arrow--prev',
+		},
+		breakpoints: {
+			320: {
+				slidesPerView: 1.1,
+				spaceBetween: 15,
+			},
+			768: {
+				slidesPerView: 2,
+				spaceBetween: 20,
+			},
+			992: {
+				slidesPerView: 3,
+				spaceBetween: 32,
+			}
 		}
 	});
 }

@@ -23,9 +23,20 @@
 	}
 
 
+
+
+	@media (any-hover: none) {
+		overflow: auto; // горизонтаьный скролл
+		-webkit-overflow-scrolling: touch; // плавный скролл
+	}
+
+
+
+
 &:not(:last-child) {
 	
 }
+
 
 
 transition: all 0.5s ease 0s;
@@ -34,7 +45,6 @@ transition: all 0.5s ease 0s;
 
 
 transform: translate(0, 0);
-
 
 
 

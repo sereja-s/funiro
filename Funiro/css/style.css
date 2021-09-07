@@ -1945,14 +1945,22 @@ body._lock {
 
 /* 2 */
 
-.tips__title {
-  margin: 0 0 32px 0;
-}
+/* .tips__title {
+	margin: 0 0 32px 0; // убрали отступ т.к. уже выставили его в .slider-tips__body
+} */
 
 /* 3 */
 
 .slider-tips {
   position: relative;
+}
+
+/* 9 */
+
+.slider-tips__body {
+  margin-left: -32px;
+  margin-right: -32px;
+  padding: 32px;
 }
 
 /* 4 */
@@ -1971,6 +1979,204 @@ body._lock {
 
 .slider-tips__image {
   padding: 0 0 64.2% 0;
+}
+
+/* 6 */
+
+.slider-tips__content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  padding: 15px;
+  -webkit-box-flex: 1;
+      -ms-flex: 1 1 auto;
+          flex: 1 1 auto;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+}
+
+/* 7 */
+
+.slider-tips__title {
+  -webkit-box-flex: 1;
+      -ms-flex: 1 1 auto;
+          flex: 1 1 auto;
+  color: inherit;
+  font-weight: 600;
+  line-height: 120%;
+  font-size: 24px;
+  -webkit-transition: color 0.5s ease 0s;
+  -o-transition: color 0.5s ease 0s;
+  transition: color 0.5s ease 0s;
+}
+
+.slider-tips__title:not(:last-child) {
+  padding: 0 0 8px 0;
+}
+
+/* 8 */
+
+.slider-tips__text {
+  color: #898989;
+  font-size: 14px;
+  line-height: 150%;
+}
+
+/* 10 */
+
+.slider-tips__dotts {
+  padding-top: 8px;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+/* 11 */
+
+.slider-tips__arrows {
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translate(0, -50%);
+      -ms-transform: translate(0, -50%);
+          transform: translate(0, -50%);
+  width: calc(100% - 48px);
+  left: 24px;
+  z-index: 5;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+/* .page__furniture {
+} */
+
+/* 1 */
+
+.furniture {
+  padding-bottom: 85px;
+}
+
+/* 2 */
+
+.furniture__label {
+  text-align: center;
+  color: #616161;
+  line-height: 150%;
+  font-size: 20px;
+}
+
+.furniture__label:not(:last-child) {
+  margin: 0 0 8px 0;
+}
+
+/* 3 */
+
+.furniture__title {
+  margin: 0 0 32px 0;
+}
+
+/* 4 */
+
+.furniture__body {
+  position: relative;
+}
+
+/* 5- построение grid-сетки: */
+
+.furniture__items {
+  display: grid;
+  grid-template-columns: auto;
+  grid-auto-flow: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 16px;
+}
+
+/* 6-колонки */
+
+.furniture__column {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 0 -8px;
+}
+
+.furniture__column:first-child {
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+}
+
+/* 7 */
+
+.furniture__row {
+  display: inline-grid;
+  padding: 0 8px;
+  gap: 16px;
+  grid-template-columns: auto;
+  grid-auto-flow: column;
+}
+
+.furniture__row:not(:last-child) {
+  margin: 0 0 16px 0;
+}
+
+/* 8- верхний ряд 1-ой колонки */
+
+.row-furniture--left-top {
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: end;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: end;
+}
+
+/* 13- ссылки с изображениями */
+
+/* 9- нижний ряд 1-ой колонки */
+
+.row-furniture--left-bottom {
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: end;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: start;
+}
+
+/* 10- 2-я(центральная колонка) */
+
+.row-furniture--center {
+  display: block;
+}
+
+/* 11-верхний ряд 3-ей колонки */
+
+.row-furniture--right-top {
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: end;
+}
+
+/* 12-нижний ряд 3-ей колонки */
+
+.row-furniture--right-bottom {
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: start;
 }
 
 @media (min-width: 767.98px) {
@@ -2122,6 +2328,11 @@ body._lock {
 
 @media (min-width: 1282px) {
   .slider-rooms__arrows {
+    width: calc(100% + 48px);
+    left: -24px;
+  }
+
+  .slider-tips__arrows {
     width: calc(100% + 48px);
     left: -24px;
   }
@@ -2288,6 +2499,34 @@ body._lock {
 
   .tips {
     padding-bottom: calc(30px + 14 * ((100vw - 320px) / 950));
+  }
+
+  .slider-tips__body {
+    margin-left: calc(-15px + -17 * ((100vw - 320px) / 950));
+  }
+
+  .slider-tips__body {
+    margin-right: calc(-15px + -17 * ((100vw - 320px) / 950));
+  }
+
+  .slider-tips__body {
+    padding: calc(15px + 17 * ((100vw - 320px) / 950));
+  }
+
+  .slider-tips__title {
+    font-size: calc(18px + 6 * ((100vw - 320px) / 950));
+  }
+
+  .slider-tips__dotts {
+    padding-top: calc(0px + 8 * ((100vw - 320px) / 950));
+  }
+
+  .furniture {
+    padding-bottom: calc(40px + 45 * ((100vw - 320px) / 950));
+  }
+
+  .furniture__label {
+    font-size: calc(16px + 4 * ((100vw - 320px) / 950));
   }
 }
 
@@ -2608,6 +2847,10 @@ body._lock {
   .slider-rooms__slide {
     width: 100%;
   }
+
+  .slider-tips__arrows {
+    display: none;
+  }
 }
 
 @media (max-width: 479.98px) and (max-width: 1270px) {
@@ -2757,13 +3000,41 @@ body._lock {
   }
 
   .slider-tips__slide:hover {
-    -webkit-box-shadow: 0 0 32 rgba(97, 97, 97, 0.2);
-            box-shadow: 0 0 32 rgba(97, 97, 97, 0.2);
+    -webkit-box-shadow: 0 0 32px rgba(97, 97, 97, 0.2);
+            box-shadow: 0 0 32px rgba(97, 97, 97, 0.2);
+  }
+
+  .slider-tips__title:hover {
+    color: #e89f71;
+  }
+
+  .furniture__items {
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+
+  .row-furniture__item img {
+    -webkit-transition: all 0.8s ease 0s;
+    -o-transition: all 0.8s ease 0s;
+    transition: all 0.8s ease 0s;
+    -webkit-filter: grayscale(1);
+            filter: grayscale(1);
+  }
+
+  .row-furniture__item:hover img {
+    -webkit-filter: grayscale(0);
+            filter: grayscale(0);
   }
 }
 
 @media (any-hover: none) {
   .item-product__actions {
     padding: 15px 0 0 0;
+  }
+
+  .furniture__body {
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
   }
 }
